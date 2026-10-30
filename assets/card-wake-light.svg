@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="168" viewBox="0 0 430 168" role="img" aria-label="wake: See what ChatGPT, Claude and Perplexity read on your website, and which sales those agent visits lead to.">
+<title>wake: See what ChatGPT, Claude and Perplexity read on your website, and which sales those agent visits lead to.</title>
+<style>
+  .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; }
+  .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+  
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<rect x="0.5" y="0.5" width="429" height="167" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+<rect x="24" y="22" width="22" height="6" rx="2" fill="#d97706"/>
+<text class="mono" x="54" y="29" font-size="11" fill="#59636e">agents.trace</text>
+<text class="mono" x="406" y="29" font-size="12" fill="#59636e" text-anchor="end"></text>
+<text class="mono" x="24" y="62" font-size="18" font-weight="700" fill="#1f2328">wake</text>
+<text class="sans" x="24" y="90" font-size="13.5" fill="#59636e">See what ChatGPT, Claude and Perplexity read on your</text>
+<text class="sans" x="24" y="110" font-size="13.5" fill="#59636e">website, and which sales those agent visits lead to.</text>
+<circle cx="322" cy="144" r="5" fill="#f1e05a"/>
+<text class="mono" x="406" y="148" font-size="12" fill="#59636e" text-anchor="end">JavaScript</text>
+</svg>
