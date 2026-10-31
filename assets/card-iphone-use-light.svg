@@ -9,7 +9,7 @@
 <rect x="0.5" y="0.5" width="429" height="167" rx="10" fill="#ffffff" stroke="#d0d7de"/>
 <rect x="24" y="22" width="22" height="6" rx="2" fill="#059669"/>
 <text class="mono" x="54" y="29" font-size="11" fill="#59636e">agents.act</text>
-<text class="mono" x="406" y="29" font-size="12" fill="#59636e" text-anchor="end">★ 9</text>
+<text class="mono" x="406" y="29" font-size="12" fill="#59636e" text-anchor="end">★ 10</text>
 <text class="mono" x="24" y="62" font-size="18" font-weight="700" fill="#1f2328">iphone-use</text>
 <text class="sans" x="24" y="90" font-size="13.5" fill="#59636e">Let an AI agent use a real iPhone from your Mac. Screen</text>
 <text class="sans" x="24" y="110" font-size="13.5" fill="#59636e">over USB, taps over Bluetooth, no app on the phone.</text>
