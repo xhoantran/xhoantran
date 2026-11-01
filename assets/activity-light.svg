@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="236" viewBox="0 0 880 236" role="img" aria-label="15,946 contributions in the last year">
-<title>15,946 contributions in the last year</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="236" viewBox="0 0 880 236" role="img" aria-label="16,030 contributions in the last year">
+<title>16,030 contributions in the last year</title>
 <style>
   .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; }
   .mono { font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
@@ -10,69 +10,69 @@
 </style>
 <rect x="0.5" y="0.5" width="879" height="235" rx="12" fill="#ffffff" stroke="#d0d7de"/>
 <text class="mono" x="32" y="28" font-size="11" fill="#59636e" letter-spacing=".06em">METRIC <tspan fill="#1f2328">contributions</tspan>  ·  weekly  ·  last 52w</text>
-<text class="mono" x="848" y="28" font-size="11" fill="#59636e" text-anchor="end">updated 2026-10-31</text>
+<text class="mono" x="848" y="28" font-size="11" fill="#59636e" text-anchor="end">updated 2026-11-01</text>
 <line x1="0" y1="44" x2="880" y2="44" stroke="#eaeef2"/>
-<text class="sans" x="32" y="104" font-size="40" font-weight="700" fill="#1f2328" letter-spacing="-.02em">15,946</text>
+<text class="sans" x="32" y="104" font-size="40" font-weight="700" fill="#1f2328" letter-spacing="-.02em">16,030</text>
 <text class="sans" x="32" y="126" font-size="13" fill="#59636e">contributions in the last year</text>
-<text class="mono" x="32" y="150" font-size="11" fill="#59636e">longest streak<tspan x="150" fill="#1f2328">182 days</tspan></text>
-<text class="mono" x="32" y="170" font-size="11" fill="#59636e">current streak<tspan x="150" fill="#1f2328">182 days</tspan></text>
+<text class="mono" x="32" y="150" font-size="11" fill="#59636e">longest streak<tspan x="150" fill="#1f2328">183 days</tspan></text>
+<text class="mono" x="32" y="170" font-size="11" fill="#59636e">current streak<tspan x="150" fill="#1f2328">183 days</tspan></text>
 <text class="mono" x="32" y="190" font-size="11" fill="#59636e">busiest day<tspan x="150" fill="#1f2328">263 · Oct 30</tspan></text>
 <line x1="316" y1="129" x2="848" y2="129" stroke="#eaeef2" stroke-dasharray="2 4"/>
 <text class="mono" x="306" y="132" font-size="10" fill="#59636e" text-anchor="end">512</text>
 <line x1="316" y1="70" x2="848" y2="70" stroke="#eaeef2" stroke-dasharray="2 4"/>
 <text class="mono" x="306" y="73" font-size="10" fill="#59636e" text-anchor="end">1,023</text>
 <line x1="316" y1="188" x2="848" y2="188" stroke="#d0d7de"/>
-<rect class="col" style="animation-delay:0.200s" x="316.0" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-02: 0</title></rect>
-<rect class="col" style="animation-delay:0.218s" x="326.2" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-09: 0</title></rect>
-<rect class="col" style="animation-delay:0.236s" x="336.5" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-16: 0</title></rect>
-<rect class="col" style="animation-delay:0.254s" x="346.7" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-23: 3</title></rect>
-<rect class="col" style="animation-delay:0.272s" x="356.9" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-30: 13</title></rect>
-<rect class="col" style="animation-delay:0.290s" x="367.2" y="184.5" width="7.2" height="3.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-07: 30</title></rect>
-<rect class="col" style="animation-delay:0.308s" x="377.4" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-14: 8</title></rect>
-<rect class="col" style="animation-delay:0.326s" x="387.6" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-21: 15</title></rect>
-<rect class="col" style="animation-delay:0.344s" x="397.8" y="177.4" width="7.2" height="10.6" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-28: 92</title></rect>
-<rect class="col" style="animation-delay:0.362s" x="408.1" y="176.8" width="7.2" height="11.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-04: 97</title></rect>
-<rect class="col" style="animation-delay:0.380s" x="418.3" y="171.5" width="7.2" height="16.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-11: 143</title></rect>
-<rect class="col" style="animation-delay:0.398s" x="428.5" y="158.6" width="7.2" height="29.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-18: 255</title></rect>
-<rect class="col" style="animation-delay:0.416s" x="438.8" y="171.4" width="7.2" height="16.6" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-25: 144</title></rect>
-<rect class="col" style="animation-delay:0.434s" x="449.0" y="167.0" width="7.2" height="21.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-01: 182</title></rect>
-<rect class="col" style="animation-delay:0.452s" x="459.2" y="177.6" width="7.2" height="10.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-08: 90</title></rect>
-<rect class="col" style="animation-delay:0.470s" x="469.5" y="181.2" width="7.2" height="6.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-15: 59</title></rect>
-<rect class="col" style="animation-delay:0.488s" x="479.7" y="182.8" width="7.2" height="5.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-22: 45</title></rect>
-<rect class="col" style="animation-delay:0.506s" x="489.9" y="173.8" width="7.2" height="14.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-01: 123</title></rect>
-<rect class="col" style="animation-delay:0.524s" x="500.2" y="176.2" width="7.2" height="11.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-08: 102</title></rect>
-<rect class="col" style="animation-delay:0.542s" x="510.4" y="173.6" width="7.2" height="14.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-15: 125</title></rect>
-<rect class="col" style="animation-delay:0.560s" x="520.6" y="158.9" width="7.2" height="29.1" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-22: 252</title></rect>
-<rect class="col" style="animation-delay:0.578s" x="530.8" y="143.5" width="7.2" height="44.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-29: 386</title></rect>
-<rect class="col" style="animation-delay:0.596s" x="541.1" y="161.8" width="7.2" height="26.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-05: 227</title></rect>
-<rect class="col" style="animation-delay:0.614s" x="551.3" y="169.5" width="7.2" height="18.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-12: 160</title></rect>
-<rect class="col" style="animation-delay:0.632s" x="561.5" y="165.5" width="7.2" height="22.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-19: 195</title></rect>
-<rect class="col" style="animation-delay:0.650s" x="571.8" y="172.8" width="7.2" height="15.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-26: 132</title></rect>
-<rect class="col" style="animation-delay:0.668s" x="582.0" y="160.2" width="7.2" height="27.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-03: 241</title></rect>
-<rect class="col" style="animation-delay:0.686s" x="592.2" y="169.0" width="7.2" height="19.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-10: 165</title></rect>
-<rect class="col" style="animation-delay:0.704s" x="602.5" y="177.6" width="7.2" height="10.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-17: 90</title></rect>
-<rect class="col" style="animation-delay:0.722s" x="612.7" y="163.7" width="7.2" height="24.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-24: 211</title></rect>
-<rect class="col" style="animation-delay:0.740s" x="622.9" y="161.1" width="7.2" height="26.9" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-31: 233</title></rect>
-<rect class="col" style="animation-delay:0.758s" x="633.2" y="157.9" width="7.2" height="30.1" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-07: 261</title></rect>
-<rect class="col" style="animation-delay:0.776s" x="643.4" y="149.2" width="7.2" height="38.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-14: 336</title></rect>
-<rect class="col" style="animation-delay:0.794s" x="653.6" y="161.2" width="7.2" height="26.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-21: 232</title></rect>
-<rect class="col" style="animation-delay:0.812s" x="663.8" y="144.2" width="7.2" height="43.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-28: 380</title></rect>
-<rect class="col" style="animation-delay:0.830s" x="674.1" y="133.3" width="7.2" height="54.7" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-05: 474</title></rect>
-<rect class="col" style="animation-delay:0.848s" x="684.3" y="154.8" width="7.2" height="33.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-12: 288</title></rect>
-<rect class="col" style="animation-delay:0.866s" x="694.5" y="118.2" width="7.2" height="69.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-19: 605</title></rect>
-<rect class="col" style="animation-delay:0.884s" x="704.8" y="110.8" width="7.2" height="77.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-26: 669</title></rect>
-<rect class="col" style="animation-delay:0.902s" x="715.0" y="107.0" width="7.2" height="81.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-02: 702</title></rect>
-<rect class="col" style="animation-delay:0.920s" x="725.2" y="136.4" width="7.2" height="51.6" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-09: 447</title></rect>
-<rect class="col" style="animation-delay:0.938s" x="735.5" y="105.2" width="7.2" height="82.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-16: 718</title></rect>
-<rect class="col" style="animation-delay:0.956s" x="745.7" y="118.3" width="7.2" height="69.7" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-23: 604</title></rect>
-<rect class="col" style="animation-delay:0.974s" x="755.9" y="118.7" width="7.2" height="69.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-30: 601</title></rect>
-<rect class="col" style="animation-delay:0.992s" x="766.2" y="85.7" width="7.2" height="102.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-06: 887</title></rect>
-<rect class="col" style="animation-delay:1.010s" x="776.4" y="108.9" width="7.2" height="79.1" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-13: 686</title></rect>
-<rect class="col" style="animation-delay:1.028s" x="786.6" y="105.1" width="7.2" height="82.9" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-20: 719</title></rect>
-<rect class="col" style="animation-delay:1.046s" x="796.8" y="70.0" width="7.2" height="118.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-27: 1,023</title></rect>
-<rect class="col" style="animation-delay:1.064s" x="807.1" y="141.7" width="7.2" height="46.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-10-04: 401</title></rect>
-<rect class="col" style="animation-delay:1.082s" x="817.3" y="101.8" width="7.2" height="86.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-10-11: 747</title></rect>
-<rect class="col" style="animation-delay:1.100s" x="827.5" y="112.7" width="7.2" height="75.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-10-18: 653</title></rect>
-<rect class="col" style="animation-delay:1.118s" x="837.8" y="107.8" width="7.2" height="80.2" rx="1.5" fill="#059669" fill-opacity="1"><title>Week of 2026-10-25: 695</title></rect>
-<text class="mono" x="367.2" y="208" font-size="10" fill="#59636e">Dec</text><text class="mono" x="408.1" y="208" font-size="10" fill="#59636e">Jan</text><text class="mono" x="449.0" y="208" font-size="10" fill="#59636e">Feb</text><text class="mono" x="489.9" y="208" font-size="10" fill="#59636e">Mar</text><text class="mono" x="541.1" y="208" font-size="10" fill="#59636e">Apr</text><text class="mono" x="582.0" y="208" font-size="10" fill="#59636e">May</text><text class="mono" x="633.2" y="208" font-size="10" fill="#59636e">Jun</text><text class="mono" x="674.1" y="208" font-size="10" fill="#59636e">Jul</text><text class="mono" x="715.0" y="208" font-size="10" fill="#59636e">Aug</text><text class="mono" x="766.2" y="208" font-size="10" fill="#59636e">Sep</text><text class="mono" x="807.1" y="208" font-size="10" fill="#59636e">Oct</text>
+<rect class="col" style="animation-delay:0.200s" x="316.0" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-09: 0</title></rect>
+<rect class="col" style="animation-delay:0.218s" x="326.2" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-16: 0</title></rect>
+<rect class="col" style="animation-delay:0.236s" x="336.5" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-23: 3</title></rect>
+<rect class="col" style="animation-delay:0.254s" x="346.7" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-11-30: 13</title></rect>
+<rect class="col" style="animation-delay:0.272s" x="356.9" y="184.5" width="7.2" height="3.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-07: 30</title></rect>
+<rect class="col" style="animation-delay:0.290s" x="367.2" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-14: 8</title></rect>
+<rect class="col" style="animation-delay:0.308s" x="377.4" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-21: 15</title></rect>
+<rect class="col" style="animation-delay:0.326s" x="387.6" y="177.4" width="7.2" height="10.6" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2025-12-28: 92</title></rect>
+<rect class="col" style="animation-delay:0.344s" x="397.8" y="176.8" width="7.2" height="11.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-04: 97</title></rect>
+<rect class="col" style="animation-delay:0.362s" x="408.1" y="171.5" width="7.2" height="16.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-11: 143</title></rect>
+<rect class="col" style="animation-delay:0.380s" x="418.3" y="158.6" width="7.2" height="29.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-18: 255</title></rect>
+<rect class="col" style="animation-delay:0.398s" x="428.5" y="171.4" width="7.2" height="16.6" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-01-25: 144</title></rect>
+<rect class="col" style="animation-delay:0.416s" x="438.8" y="167.0" width="7.2" height="21.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-01: 182</title></rect>
+<rect class="col" style="animation-delay:0.434s" x="449.0" y="177.6" width="7.2" height="10.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-08: 90</title></rect>
+<rect class="col" style="animation-delay:0.452s" x="459.2" y="181.2" width="7.2" height="6.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-15: 59</title></rect>
+<rect class="col" style="animation-delay:0.470s" x="469.5" y="182.8" width="7.2" height="5.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-02-22: 45</title></rect>
+<rect class="col" style="animation-delay:0.488s" x="479.7" y="173.8" width="7.2" height="14.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-01: 123</title></rect>
+<rect class="col" style="animation-delay:0.506s" x="489.9" y="176.2" width="7.2" height="11.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-08: 102</title></rect>
+<rect class="col" style="animation-delay:0.524s" x="500.2" y="173.6" width="7.2" height="14.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-15: 125</title></rect>
+<rect class="col" style="animation-delay:0.542s" x="510.4" y="158.9" width="7.2" height="29.1" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-22: 252</title></rect>
+<rect class="col" style="animation-delay:0.560s" x="520.6" y="143.5" width="7.2" height="44.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-03-29: 386</title></rect>
+<rect class="col" style="animation-delay:0.578s" x="530.8" y="161.8" width="7.2" height="26.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-05: 227</title></rect>
+<rect class="col" style="animation-delay:0.596s" x="541.1" y="169.5" width="7.2" height="18.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-12: 160</title></rect>
+<rect class="col" style="animation-delay:0.614s" x="551.3" y="165.5" width="7.2" height="22.5" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-19: 195</title></rect>
+<rect class="col" style="animation-delay:0.632s" x="561.5" y="172.8" width="7.2" height="15.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-04-26: 132</title></rect>
+<rect class="col" style="animation-delay:0.650s" x="571.8" y="160.2" width="7.2" height="27.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-03: 241</title></rect>
+<rect class="col" style="animation-delay:0.668s" x="582.0" y="169.0" width="7.2" height="19.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-10: 165</title></rect>
+<rect class="col" style="animation-delay:0.686s" x="592.2" y="177.6" width="7.2" height="10.4" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-17: 90</title></rect>
+<rect class="col" style="animation-delay:0.704s" x="602.5" y="163.7" width="7.2" height="24.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-24: 211</title></rect>
+<rect class="col" style="animation-delay:0.722s" x="612.7" y="161.1" width="7.2" height="26.9" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-05-31: 233</title></rect>
+<rect class="col" style="animation-delay:0.740s" x="622.9" y="157.9" width="7.2" height="30.1" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-07: 261</title></rect>
+<rect class="col" style="animation-delay:0.758s" x="633.2" y="149.2" width="7.2" height="38.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-14: 336</title></rect>
+<rect class="col" style="animation-delay:0.776s" x="643.4" y="161.2" width="7.2" height="26.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-21: 232</title></rect>
+<rect class="col" style="animation-delay:0.794s" x="653.6" y="144.2" width="7.2" height="43.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-06-28: 380</title></rect>
+<rect class="col" style="animation-delay:0.812s" x="663.8" y="133.3" width="7.2" height="54.7" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-05: 474</title></rect>
+<rect class="col" style="animation-delay:0.830s" x="674.1" y="154.8" width="7.2" height="33.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-12: 288</title></rect>
+<rect class="col" style="animation-delay:0.848s" x="684.3" y="118.2" width="7.2" height="69.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-19: 605</title></rect>
+<rect class="col" style="animation-delay:0.866s" x="694.5" y="110.8" width="7.2" height="77.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-07-26: 669</title></rect>
+<rect class="col" style="animation-delay:0.884s" x="704.8" y="107.0" width="7.2" height="81.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-02: 702</title></rect>
+<rect class="col" style="animation-delay:0.902s" x="715.0" y="136.4" width="7.2" height="51.6" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-09: 447</title></rect>
+<rect class="col" style="animation-delay:0.920s" x="725.2" y="105.2" width="7.2" height="82.8" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-16: 718</title></rect>
+<rect class="col" style="animation-delay:0.938s" x="735.5" y="118.3" width="7.2" height="69.7" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-23: 604</title></rect>
+<rect class="col" style="animation-delay:0.956s" x="745.7" y="118.7" width="7.2" height="69.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-08-30: 601</title></rect>
+<rect class="col" style="animation-delay:0.974s" x="755.9" y="85.7" width="7.2" height="102.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-06: 887</title></rect>
+<rect class="col" style="animation-delay:0.992s" x="766.2" y="108.9" width="7.2" height="79.1" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-13: 686</title></rect>
+<rect class="col" style="animation-delay:1.010s" x="776.4" y="105.1" width="7.2" height="82.9" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-20: 719</title></rect>
+<rect class="col" style="animation-delay:1.028s" x="786.6" y="70.0" width="7.2" height="118.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-09-27: 1,023</title></rect>
+<rect class="col" style="animation-delay:1.046s" x="796.8" y="141.7" width="7.2" height="46.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-10-04: 401</title></rect>
+<rect class="col" style="animation-delay:1.064s" x="807.1" y="101.8" width="7.2" height="86.2" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-10-11: 747</title></rect>
+<rect class="col" style="animation-delay:1.082s" x="817.3" y="112.7" width="7.2" height="75.3" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-10-18: 653</title></rect>
+<rect class="col" style="animation-delay:1.100s" x="827.5" y="99.0" width="7.2" height="89.0" rx="1.5" fill="#059669" fill-opacity="0.75"><title>Week of 2026-10-25: 772</title></rect>
+<rect class="col" style="animation-delay:1.118s" x="837.8" y="186.0" width="7.2" height="2.0" rx="1.5" fill="#059669" fill-opacity="1"><title>Week of 2026-11-01: 7</title></rect>
+<text class="mono" x="356.9" y="208" font-size="10" fill="#59636e">Dec</text><text class="mono" x="397.8" y="208" font-size="10" fill="#59636e">Jan</text><text class="mono" x="438.8" y="208" font-size="10" fill="#59636e">Feb</text><text class="mono" x="479.7" y="208" font-size="10" fill="#59636e">Mar</text><text class="mono" x="530.8" y="208" font-size="10" fill="#59636e">Apr</text><text class="mono" x="571.8" y="208" font-size="10" fill="#59636e">May</text><text class="mono" x="622.9" y="208" font-size="10" fill="#59636e">Jun</text><text class="mono" x="663.8" y="208" font-size="10" fill="#59636e">Jul</text><text class="mono" x="704.8" y="208" font-size="10" fill="#59636e">Aug</text><text class="mono" x="755.9" y="208" font-size="10" fill="#59636e">Sep</text><text class="mono" x="796.8" y="208" font-size="10" fill="#59636e">Oct</text>
 </svg>
