@@ -1,13 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="340" viewBox="0 0 900 340" role="img" aria-label="An agent run: the agent plans, calls node-agent, wake, agentdog and receiptly as tools, and finishes all four tasks.">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="316" viewBox="0 0 900 316" role="img" aria-label="An agent run: the agent plans, calls node-agent, wake, agentdog and receiptly as tools, and finishes all four tasks.">
 <title>An agent run: the agent plans, calls node-agent, wake, agentdog and receiptly as tools, and finishes all four tasks.</title>
 <defs>
-  <clipPath id="frame"><rect width="900" height="340" rx="16"/></clipPath>
+  <clipPath id="frame"><rect width="900" height="316" rx="16"/></clipPath>
   <filter id="glow" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   <filter id="haze" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="16"/></filter>
-  <linearGradient id="edge" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="900" y2="0">
-  <stop offset="0" stop-color="#34d399"/><stop offset=".3" stop-color="#23233a"/><stop offset=".7" stop-color="#23233a"/><stop offset="1" stop-color="#a78bfa"/>
-  <animateTransform attributeName="gradientTransform" type="rotate" from="0 450 170" to="360 450 170" dur="9s" repeatCount="indefinite"/>
-</linearGradient>
+  
   <linearGradient id="bar" x1="0" x2="1"><stop offset="0" stop-color="#a78bfa" stop-opacity="0"/><stop offset=".5" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
   <radialGradient id="tglow" cx="1" cy="0" r="1"><stop offset="0" stop-color="#7c3aed" stop-opacity=".22"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
 </defs>
@@ -33,8 +30,8 @@
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>
 <g clip-path="url(#frame)">
-<rect width="900" height="340" fill="#0b0b14"/>
-<rect width="900" height="340" fill="url(#tglow)"/>
+<rect width="900" height="316" fill="#0b0b14"/>
+<rect width="900" height="316" fill="url(#tglow)"/>
 <rect width="900" height="40" fill="#ffffff" fill-opacity=".025"/>
 <line x1="0" y1="40" x2="900" y2="40" stroke="#23233a"/>
 <rect y="39" width="900" height="1.5" fill="url(#bar)"/>
@@ -57,7 +54,7 @@
 <text class="mono" x="868" y="219" font-size="13" fill="#34d399" text-anchor="end" style="animation: r5 16s linear infinite">✓ 311ms</text>
 <g style="animation: l6 16s linear infinite"><text class="mono" x="32" y="246" font-size="14"><tspan fill="#34d399">✓ </tspan><tspan fill="#f4f4fb">done </tspan><tspan fill="#9a9ab8">· 4/4 tasks · humans helped +1 · AGI eta: soon™</tspan></text></g>
 <g style="animation: l7 16s linear infinite"><text class="mono" x="32" y="273" font-size="14"><tspan fill="#34d399">❯ </tspan></text><rect class="blink" x="48.8" y="260" width="8" height="17" fill="#22d3ee"/></g>
-<text class="mono" x="868" y="320" font-size="11" fill="#55557a" text-anchor="end" style="animation: foot 16s linear infinite">tokens 12.4k · cost $0.03 · vibes ✓</text>
+<text class="mono" x="868" y="296" font-size="11" fill="#55557a" text-anchor="end" style="animation: foot 16s linear infinite">tokens 12.4k · cost $0.03 · vibes ✓</text>
 </g>
-<rect x=".5" y=".5" width="899" height="339" rx="16" fill="none" stroke="url(#edge)" stroke-width="1"/>
+<rect x=".5" y=".5" width="899" height="315" rx="16" fill="none" stroke="#23233a" stroke-width="1"/>
 </svg>

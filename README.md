@@ -21,8 +21,4 @@
   <img src="assets/skyline.svg" width="100%" alt="Contribution skyline: every day of the last year as a 3D tower, taller for busier days.">
 </p>
 
-<p align="center">
-  <img src="assets/footer.svg" width="100%" alt="Thanks for stopping by. Let's build agents that help people.">
-</p>
-
-<p align="center"><sub>Every image here is generated from live GitHub data by <a href="scripts/build.mjs"><code>scripts/build.mjs</code></a> and refreshed daily.</sub></p>
+<p align="center"><sub>Thanks for stopping by. Let's build agents that help people.<br>Every image here is generated from live GitHub data by <a href="scripts/build.mjs"><code>scripts/build.mjs</code></a> and refreshed daily.</sub></p>

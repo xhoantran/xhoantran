@@ -73,7 +73,7 @@ function svg(w, h, title, { defs = "", style = "" }, body) {
 <g clip-path="url(#frame)">
 ${body}
 </g>
-<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="16" fill="none" stroke="url(#edge)" stroke-width="1"/>
+<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="16" fill="none" stroke="${defs.includes('id="edge"') ? "url(#edge)" : C.line}" stroke-width="1"/>
 </svg>
 `;
 }
@@ -159,13 +159,14 @@ function streaks(days) {
 const shortDate = (iso) => new Date(iso + "T00:00:00Z").toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 
 function hero(s) {
-  const W = 900, H = 440;
+  const W = 900, H = 372;
   const rand = rng(7);
 
-  const stars = Array.from({ length: 110 }, () => {
-    const r = f4(0.3 + rand() * 1.2);
-    return `<circle cx="${f4(rand() * W)}" cy="${f4(rand() * H)}" r="${r}" fill="#fff" opacity="${f4(0.25 + rand() * 0.6)}" style="animation: tw ${f4(2 + rand() * 4)}s ease-in-out ${f4(-rand() * 6)}s infinite"/>`;
-  }).join("\n");
+  // Stars stay clear of the text column so nothing sits on top of the name, tagline or chips.
+  const stars = Array.from({ length: 120 }, () => [f4(rand() * W), f4(rand() * H), f4(0.3 + rand() * 1.1), rand(), rand()])
+    .filter(([x, y]) => !(x < 540 && y > 24 && y < 348))
+    .map(([x, y, r, o, t]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity="${f4(0.25 + o * 0.5)}" style="animation: tw ${f4(3 + t * 4)}s ease-in-out ${f4(-t * 6)}s infinite"/>`)
+    .join("\n");
 
   // Tagline typed out, one character per step, with a caret that follows along.
   const cw = 10.2, tx = 40, y1 = 204, y2 = 232, step = 0.045, s1 = 1.0;
@@ -196,24 +197,25 @@ function hero(s) {
   }).join("\n");
 
   // Agents and their friends orbit an AGI core.
-  const cx = 690, cy = 222;
+  const cx = 700, cy = 196;
   const rings = [
-    { rx: 186, ry: 64, dur: 30, nodes: [["humans", C.pink], ["agents", C.cyan], ["evals", C.amber]] },
-    { rx: 132, ry: 45, dur: 21, nodes: [["tools", C.green], ["memory", C.blue]] },
-    { rx: 80, ry: 27, dur: 13, nodes: [["MCP", C.violet]] },
+    { rx: 172, ry: 64, dur: 36, nodes: [["humans", C.pink], ["agents", C.cyan], ["MCP", C.violet]] },
+    { rx: 120, ry: 46, dur: 26, nodes: [["tools", C.green], ["memory", C.blue]] },
+    // Too close to the core for a labelled node; it stays as a ring.
+    { rx: 70, ry: 25, dur: 17, nodes: [] },
   ];
   const orbitPath = (rx, ry) => `M ${cx + rx} ${cy} A ${rx} ${ry} 0 1 1 ${cx - rx} ${cy} A ${rx} ${ry} 0 1 1 ${cx + rx} ${cy}`;
   const ringEls = rings.map((r) => `<ellipse class="ring" cx="${cx}" cy="${cy}" rx="${r.rx}" ry="${r.ry}" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7"/>`).join("\n");
   const nodeEls = rings.flatMap((r) => r.nodes.map(([label, color], k) => `<g>
   <circle r="5" fill="${color}" filter="url(#glow)"/>
   <circle r="11" fill="none" stroke="${color}" stroke-opacity=".35"/>
-  <text class="mono" x="15" y="4" font-size="11" fill="${C.ink}">${label}</text>
+  <text class="mono" x="15" y="4" font-size="11" fill="${C.ink}" stroke="${C.bg}" stroke-width="4" stroke-linejoin="round" paint-order="stroke">${label}</text>
   <animateMotion dur="${r.dur}s" begin="${f4(-(r.dur * k) / r.nodes.length - r.dur * 0.15)}s" repeatCount="indefinite" path="${orbitPath(r.rx, r.ry)}"/>
 </g>`)).join("\n");
 
-  const particles = Array.from({ length: 16 }, (_, i) => {
+  const particles = Array.from({ length: 8 }, (_, i) => {
     const a = rand() * Math.PI * 2;
-    const d = 70 + rand() * 120;
+    const d = 60 + rand() * 80;
     const dx = f4(Math.cos(a) * d), dy = f4(Math.sin(a) * d * 0.45);
     return { el: `<circle cx="${cx}" cy="${cy}" r="${f4(0.8 + rand() * 1.4)}" fill="${[C.cyan, C.violet, "#ffffff"][i % 3]}" style="animation: p${i} ${f4(2.5 + rand() * 2.5)}s ease-out ${f4(-rand() * 4)}s infinite"/>`,
       kf: `@keyframes p${i} { 0% { transform: translate(0,0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(${dx}px, ${dy}px); opacity: 0; } }` };
@@ -241,8 +243,8 @@ function hero(s) {
   ${particles.map((p) => p.kf).join("\n  ")}`;
 
   const body = `<rect width="${W}" height="${H}" fill="${C.bg}"/>
-<circle cx="120" cy="40" r="360" fill="url(#glowV)"/>
-<circle cx="820" cy="430" r="380" fill="url(#glowC)"/>
+<circle cx="120" cy="20" r="340" fill="url(#glowV)"/>
+<circle cx="840" cy="400" r="340" fill="url(#glowC)"/>
 ${stars}
 ${ringEls}
 <circle class="pulse" cx="${cx}" cy="${cy}" r="70" fill="url(#aura)"/>
@@ -256,7 +258,7 @@ ${nodeEls}
   <text class="mono" x="68" y="55" font-size="11" fill="${C.ink}" letter-spacing=".08em">ONLINE · BUILDING IN STEALTH</text>
 </g>
 <g class="rise" style="animation-delay:.2s">
-  <text class="sans" x="40" y="152" font-size="72" font-weight="800" fill="${C.violet}" letter-spacing="-.035em" filter="url(#haze)" opacity=".55">Hoan Tran</text>
+  <text class="sans" x="40" y="152" font-size="72" font-weight="800" fill="${C.violet}" letter-spacing="-.035em" filter="url(#haze)" opacity=".35">Hoan Tran</text>
   <text class="sans" x="40" y="152" font-size="72" font-weight="800" fill="url(#shine)" letter-spacing="-.035em">Hoan Tran</text>
 </g>
 ${typed("tl1", y1, t1, w1)}
@@ -265,14 +267,13 @@ ${typed("tl2", y2, t2, w2)}
   ${discrete("x", dur, caretTimes, caretX)}
   ${discrete("y", dur, caretTimes, caretY)}
 </rect>
-${chips}
-<text class="mono rise" style="animation-delay:5.4s" x="40" y="${H - 40}" font-size="11" fill="${C.dim}" letter-spacing=".08em">AGENTS · MCP · EVALS · OBSERVABILITY · HUMANS FIRST</text>`;
+${chips}`;
 
   return svg(W, H, "Hoan Tran: I build AI agents that work for people, on the road to AGI that helps humanity.", { defs, style }, body);
 }
 
 function terminal() {
-  const W = 900, H = 340, T = 16, cw = 8.4, x = 32, top = 84, lh = 27;
+  const W = 900, H = 316, T = 16, cw = 8.4, x = 32, top = 84, lh = 27;
   const tool = (name, color, call, ms) => ({ parts: [["  ↳ ", C.dim], [name, color], [call, C.ink]], right: `✓ ${ms}` });
   const lines = [
     { parts: [["❯ ", C.green], ["agent run ", C.ink], ['"make life easier for 8 billion people"', C.amber]] },
@@ -318,7 +319,7 @@ function terminal() {
 
   kfs.push(`@keyframes foot { 0%, ${pct(7.0)}% { opacity: 0; } ${pct(7.3)}% { opacity: 1; } 96% { opacity: 1; } 100% { opacity: 0; } }`);
 
-  const defs = `${edge(W, H, C.green, C.violet)}
+  const defs = `
   <linearGradient id="bar" x1="0" x2="1"><stop offset="0" stop-color="${C.violet}" stop-opacity="0"/><stop offset=".5" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient>
   <radialGradient id="tglow" cx="1" cy="0" r="1"><stop offset="0" stop-color="#7c3aed" stop-opacity=".22"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>`;
 
@@ -336,29 +337,25 @@ ${els}
 }
 
 function card(p, i) {
-  const W = 440, H = 190;
+  const W = 440, H = 168;
   const lines = wrap(p.blurb, 54).slice(0, 3);
   const lang = p.primaryLanguage;
 
-  const defs = `${edge(W, H, p.color, C.ink)}
-  <radialGradient id="cglow"><stop offset="0" stop-color="${p.color}" stop-opacity=".32"/><stop offset="1" stop-color="${p.color}" stop-opacity="0"/></radialGradient>
-  <linearGradient id="num" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.color}" stop-opacity=".55"/><stop offset="1" stop-color="${p.color}" stop-opacity="0"/></linearGradient>`;
-
-  const style = `.orb { transform-box: fill-box; transform-origin: center; animation: orb 7s ease-in-out infinite; }
-  @keyframes orb { 50% { transform: translate(-24px, 14px) scale(1.15); } }`;
+  const defs = `
+  <radialGradient id="cglow"><stop offset="0" stop-color="${p.color}" stop-opacity=".22"/><stop offset="1" stop-color="${p.color}" stop-opacity="0"/></radialGradient>
+  <linearGradient id="num" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.color}" stop-opacity=".3"/><stop offset="1" stop-color="${p.color}" stop-opacity="0"/></linearGradient>`;
 
   const body = `<rect width="${W}" height="${H}" fill="${C.panel}"/>
-<circle class="orb" cx="${W - 50}" cy="20" r="150" fill="url(#cglow)"/>
-<text class="sans" x="${W - 24}" y="72" font-size="74" font-weight="800" fill="url(#num)" text-anchor="end" letter-spacing="-.04em">${String(i + 1).padStart(2, "0")}</text>
-<circle cx="30" cy="34" r="4" fill="${p.color}" filter="url(#glow)"/>
-<text class="mono" x="44" y="38" font-size="11" fill="${C.muted}" letter-spacing=".08em">github.com/${LOGIN}</text>
-<text class="mono" x="24" y="76" font-size="21" font-weight="700" fill="${C.ink}">${esc(p.repo)}</text>
-${lines.map((l, j) => `<text class="sans" x="24" y="${106 + j * 20}" font-size="13.5" fill="${C.muted}">${esc(l)}</text>`).join("\n")}
-${lang ? `<circle cx="30" cy="${H - 24}" r="5" fill="${lang.color || C.muted}"/>
-<text class="mono" x="42" y="${H - 20}" font-size="12" fill="${C.muted}">${esc(lang.name)}</text>` : ""}
-${p.stargazerCount > 0 ? `<text class="mono" x="${W - 24}" y="${H - 20}" font-size="12" fill="${C.amber}" text-anchor="end">★ ${fmt(p.stargazerCount)}</text>` : ""}`;
+<circle cx="${W - 40}" cy="0" r="160" fill="url(#cglow)"/>
+<text class="sans" x="${W - 24}" y="62" font-size="60" font-weight="800" fill="url(#num)" text-anchor="end" letter-spacing="-.04em">${String(i + 1).padStart(2, "0")}</text>
+<rect x="24" y="30" width="4" height="22" rx="2" fill="${p.color}"/>
+<text class="mono" x="38" y="48" font-size="20" font-weight="700" fill="${C.ink}">${esc(p.repo)}</text>
+${lines.map((l, j) => `<text class="sans" x="24" y="${84 + j * 20}" font-size="13.5" fill="${C.muted}">${esc(l)}</text>`).join("\n")}
+${lang ? `<circle cx="29" cy="${H - 26}" r="4.5" fill="${lang.color || C.muted}"/>
+<text class="mono" x="40" y="${H - 22}" font-size="12" fill="${C.muted}">${esc(lang.name)}</text>` : ""}
+${p.stargazerCount > 0 ? `<text class="mono" x="${W - 24}" y="${H - 22}" font-size="12" fill="${C.amber}" text-anchor="end">★ ${fmt(p.stargazerCount)}</text>` : ""}`;
 
-  return svg(W, H, `${p.repo}: ${p.blurb}`, { defs, style }, body);
+  return svg(W, H, `${p.repo}: ${p.blurb}`, { defs }, body);
 }
 
 function skyline(s) {
@@ -409,14 +406,14 @@ function skyline(s) {
     return show ? `<text class="mono" x="${f4(mx)}" y="${f4(my + 10)}" font-size="10" fill="${C.dim}">${m}</text>` : "";
   }).join("");
 
-  const defs = `${edge(W, H, C.cyan, C.violet)}
+  const defs = `
   <radialGradient id="floor" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#7c3aed" stop-opacity=".35"/><stop offset=".6" stop-color="#0891b2" stop-opacity=".12"/><stop offset="1" stop-color="#0891b2" stop-opacity="0"/></radialGradient>
   <linearGradient id="big" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#c4b5fd"/><stop offset="1" stop-color="#67e8f9"/></linearGradient>`;
 
   const style = `.b { transform-box: fill-box; transform-origin: 50% 100%; animation: grow .8s cubic-bezier(.2,.9,.25,1.15) both; }
   @keyframes grow { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
-  .beacon { animation: beacon 2.4s ease-in-out 2.4s infinite both; }
-  @keyframes beacon { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { opacity: .35; } }`;
+  .beacon { animation: fadein .6s ease-out 2.6s both; }
+  @keyframes fadein { from { opacity: 0; } }`;
 
   const kv = [
     ["longest streak", `${s.longest} days`],
@@ -428,7 +425,7 @@ function skyline(s) {
 <ellipse cx="${W / 2 + 40}" cy="${H - 130}" rx="480" ry="190" fill="url(#floor)"/>
 <text class="mono" x="36" y="44" font-size="11" fill="${C.muted}" letter-spacing=".12em">CONTRIBUTION SKYLINE · LAST 365 DAYS</text>
 <text class="sans" x="34" y="100" font-size="52" font-weight="800" fill="url(#big)" letter-spacing="-.03em">${fmt(s.total)}</text>
-<text class="sans" x="36" y="124" font-size="14" fill="${C.muted}">contributions, every one of them shipped</text>
+<text class="sans" x="36" y="124" font-size="14" fill="${C.muted}">contributions in the last year</text>
 ${kv}
 ${blocks}
 ${beacon}
@@ -438,26 +435,6 @@ ${months}
   return svg(W, H, `Contribution skyline: ${fmt(s.total)} contributions in the last year`, { defs, style }, body);
 }
 
-function footer() {
-  const W = 900, H = 120;
-  const wave = (amp, len, cy) => {
-    let d = `M -${len} ${cy}`;
-    for (let x = -len; x <= W + len; x += 6) d += ` L ${x} ${f4(cy + amp * Math.sin((2 * Math.PI * x) / len))}`;
-    return d;
-  };
-  const layers = [
-    [14, 180, 60, C.violet, 9], [10, 140, 64, C.cyan, 7], [7, 220, 58, C.pink, 12],
-  ].map(([amp, len, cy, color, dur], i) => `<path d="${wave(amp, len, cy)}" fill="none" stroke="${color}" stroke-opacity="${0.55 - i * 0.12}" stroke-width="1.5" style="animation: w${i} ${dur}s linear infinite"/>`).join("\n");
-  const style = [180, 140, 220].map((len, i) => `@keyframes w${i} { to { transform: translateX(${i % 2 ? len : -len}px); } }`).join("\n  ");
-  const defs = `${edge(W, H, C.pink, C.cyan)}
-  <linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-color="${C.bg}"/><stop offset=".12" stop-color="${C.bg}" stop-opacity="0"/><stop offset=".88" stop-color="${C.bg}" stop-opacity="0"/><stop offset="1" stop-color="${C.bg}"/></linearGradient>`;
-  const body = `<rect width="${W}" height="${H}" fill="${C.bg}"/>
-${layers}
-<rect width="${W}" height="${H}" fill="url(#fade)"/>
-<rect x="${W / 2 - 250}" y="${H / 2 - 18}" width="500" height="36" rx="18" fill="${C.bg}" stroke="${C.line}"/>
-<text class="mono" x="${W / 2}" y="${H / 2 + 5}" font-size="13" fill="${C.ink}" text-anchor="middle">thanks for stopping by <tspan fill="${C.violet}">✦</tspan> let's build agents that help people</text>`;
-  return svg(W, H, "Thanks for stopping by. Let's build agents that help people.", { defs, style }, body);
-}
 
 const { user, repos } = await fetchData();
 const cal = user.contributionsCollection.contributionCalendar;
@@ -484,6 +461,5 @@ const write = (name, content) => writeFileSync(new URL(name, OUT), content);
 write("hero.svg", hero(stats));
 write("terminal.svg", terminal());
 write("skyline.svg", skyline(stats));
-write("footer.svg", footer());
 repos.forEach((p, i) => write(`card-${p.repo}.svg`, card(p, i)));
 console.log(`Wrote assets for ${fmt(stats.total)} contributions, ${stats.stars} stars, ${repos.length} project cards.`);
