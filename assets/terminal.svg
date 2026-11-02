@@ -1,12 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="316" viewBox="0 0 900 316" role="img" aria-label="An agent run: the agent plans, calls node-agent, wake, agentdog and receiptly as tools, and finishes all four tasks.">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="352" viewBox="0 0 900 352" role="img" aria-label="An agent run: the agent plans, calls node-agent, wake, agentdog and receiptly as tools, and finishes all four tasks.">
 <title>An agent run: the agent plans, calls node-agent, wake, agentdog and receiptly as tools, and finishes all four tasks.</title>
 <defs>
-  <clipPath id="frame"><rect width="900" height="316" rx="16"/></clipPath>
+  <clipPath id="frame"><rect width="900" height="352" rx="16"/></clipPath>
   <filter id="glow" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
   <filter id="haze" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="16"/></filter>
   
   <linearGradient id="bar" x1="0" x2="1"><stop offset="0" stop-color="#a78bfa" stop-opacity="0"/><stop offset=".5" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
-  <radialGradient id="tglow" cx="1" cy="0" r="1"><stop offset="0" stop-color="#7c3aed" stop-opacity=".22"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
+  <radialGradient id="tglow" cx="1" cy="0" r="1"><stop offset="0" stop-color="#7c3aed" stop-opacity=".16"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
+  <linearGradient id="titlebar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2b3b"/><stop offset="1" stop-color="#1f1f2c"/></linearGradient>
+  <linearGradient id="pane" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f0f19"/><stop offset="1" stop-color="#0a0a12"/></linearGradient>
+  <filter id="drop" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#000" flood-opacity=".45"/><feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000" flood-opacity=".35"/></filter>
+  <clipPath id="win"><rect width="856" height="316" rx="12"/></clipPath>
+  <radialGradient id="red" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#ff7b73"/><stop offset="1" stop-color="#e0443e"/></radialGradient>
+  <radialGradient id="yellow" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#ffd36b"/><stop offset="1" stop-color="#dea123"/></radialGradient>
+  <radialGradient id="green" cx=".5" cy=".3" r=".7"><stop offset="0" stop-color="#5fe07a"/><stop offset="1" stop-color="#1aab29"/></radialGradient>
 </defs>
 <style>
   .sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif; }
@@ -29,32 +36,37 @@
   @keyframes foot { 0%, 43.75% { opacity: 0; } 45.625% { opacity: 1; } 96% { opacity: 1; } 100% { opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>
-<g clip-path="url(#frame)">
-<rect width="900" height="316" fill="#0b0b14"/>
-<rect width="900" height="316" fill="url(#tglow)"/>
-<rect width="900" height="40" fill="#ffffff" fill-opacity=".025"/>
-<line x1="0" y1="40" x2="900" y2="40" stroke="#23233a"/>
-<rect y="39" width="900" height="1.5" fill="url(#bar)"/>
-<circle cx="24" cy="20" r="6" fill="#ff5f57"/><circle cx="44" cy="20" r="6" fill="#febc2e"/><circle cx="64" cy="20" r="6" fill="#28c840"/>
-<text class="mono" x="450" y="24" font-size="12" fill="#9a9ab8" text-anchor="middle">agent@stealth — ~/humanity</text>
-<clipPath id="type"><rect x="32" y="68" height="24" width="448.40000000000003"><animate attributeName="width" calcMode="discrete" dur="16s" keyTimes="0;0.0397;0.0419;0.0441;0.0462;0.0484;0.0506;0.0528;0.055;0.0572;0.0594;0.0616;0.0638;0.0659;0.0681;0.0703;0.0725;0.0747;0.0769;0.0791;0.0813;0.0834;0.0856;0.0878;0.09;0.0922;0.0944;0.0966;0.0988;0.1009;0.1031;0.1053;0.1075;0.1097;0.1119;0.1141;0.1163;0.1184;0.1206;0.1228;0.125;0.1272;0.1294;0.1316;0.1338;0.1359;0.1381;0.1403;0.1425;0.1447;0.1469;0.1491;0.97" values="0;8.4;16.8;25.2;33.6;42;50.4;58.8;67.2;75.6;84;92.4;100.8;109.2;117.6;126;134.4;142.8;151.2;159.6;168;176.4;184.8;193.2;201.6;210;218.4;226.8;235.2;243.6;252;260.4;268.8;277.2;285.6;294;302.4;310.8;319.2;327.6;336;344.4;352.8;361.2;369.6;378;386.4;394.8;403.2;411.6;420;428.4;0" repeatCount="indefinite"/></rect></clipPath>
-<text class="mono" x="32" y="84" font-size="14" clip-path="url(#type)"><tspan fill="#34d399">❯ </tspan><tspan fill="#f4f4fb">agent run </tspan><tspan fill="#fbbf24">&quot;make life easier for 8 billion people&quot;</tspan></text>
-<rect width="8" height="17" y="71" fill="#22d3ee" x="32">
-  <animate attributeName="x" calcMode="discrete" dur="16s" keyTimes="0;0.0397;0.0419;0.0441;0.0462;0.0484;0.0506;0.0528;0.055;0.0572;0.0594;0.0616;0.0638;0.0659;0.0681;0.0703;0.0725;0.0747;0.0769;0.0791;0.0813;0.0834;0.0856;0.0878;0.09;0.0922;0.0944;0.0966;0.0988;0.1009;0.1031;0.1053;0.1075;0.1097;0.1119;0.1141;0.1163;0.1184;0.1206;0.1228;0.125;0.1272;0.1294;0.1316;0.1338;0.1359;0.1381;0.1403;0.1425;0.1447;0.1469;0.1491;0.97" values="32;40.4;48.8;57.2;65.6;74;82.4;90.8;99.2;107.6;116;124.4;132.8;141.2;149.6;158;166.4;174.8;183.2;191.6;200;208.4;216.8;225.2;233.6;242;250.4;258.8;267.2;275.6;284;292.4;300.8;309.2;317.6;326;334.4;342.8;351.2;359.6;368;376.4;384.8;393.2;401.6;410;418.4;426.8;435.2;443.6;452;460.4;32" repeatCount="indefinite"/>
+<g transform="translate(22 10)">
+<rect width="856" height="316" rx="12" fill="#0b0b14" filter="url(#drop)"/>
+<g clip-path="url(#win)">
+<rect width="856" height="316" fill="url(#pane)"/>
+<rect width="856" height="316" fill="url(#tglow)"/>
+<rect width="856" height="38" fill="url(#titlebar)"/>
+<line x1="0" y1="38.5" x2="856" y2="38.5" stroke="#000" stroke-opacity=".55"/>
+<rect y="38" width="856" height="1" fill="url(#bar)" opacity=".5"/>
+<line x1="12" y1=".5" x2="844" y2=".5" stroke="#fff" stroke-opacity=".14"/>
+<circle cx="22" cy="19" r="6" fill="url(#red)" stroke="#c13a33" stroke-width=".6"/><circle cx="42" cy="19" r="6" fill="url(#yellow)" stroke="#c08a1c" stroke-width=".6"/><circle cx="62" cy="19" r="6" fill="url(#green)" stroke="#169424" stroke-width=".6"/>
+<text class="sans" x="428" y="23" font-size="12.5" font-weight="600" fill="#b8b8cc" text-anchor="middle">agent@stealth — ~/humanity</text>
+<clipPath id="type"><rect x="30" y="64" height="24" width="448.40000000000003"><animate attributeName="width" calcMode="discrete" dur="16s" keyTimes="0;0.0397;0.0419;0.0441;0.0462;0.0484;0.0506;0.0528;0.055;0.0572;0.0594;0.0616;0.0638;0.0659;0.0681;0.0703;0.0725;0.0747;0.0769;0.0791;0.0813;0.0834;0.0856;0.0878;0.09;0.0922;0.0944;0.0966;0.0988;0.1009;0.1031;0.1053;0.1075;0.1097;0.1119;0.1141;0.1163;0.1184;0.1206;0.1228;0.125;0.1272;0.1294;0.1316;0.1338;0.1359;0.1381;0.1403;0.1425;0.1447;0.1469;0.1491;0.97" values="0;8.4;16.8;25.2;33.6;42;50.4;58.8;67.2;75.6;84;92.4;100.8;109.2;117.6;126;134.4;142.8;151.2;159.6;168;176.4;184.8;193.2;201.6;210;218.4;226.8;235.2;243.6;252;260.4;268.8;277.2;285.6;294;302.4;310.8;319.2;327.6;336;344.4;352.8;361.2;369.6;378;386.4;394.8;403.2;411.6;420;428.4;0" repeatCount="indefinite"/></rect></clipPath>
+<text class="mono" x="30" y="80" font-size="14" clip-path="url(#type)"><tspan fill="#34d399">❯ </tspan><tspan fill="#f4f4fb">agent run </tspan><tspan fill="#fbbf24">&quot;make life easier for 8 billion people&quot;</tspan></text>
+<rect width="8" height="17" y="67" fill="#22d3ee" x="30">
+  <animate attributeName="x" calcMode="discrete" dur="16s" keyTimes="0;0.0397;0.0419;0.0441;0.0462;0.0484;0.0506;0.0528;0.055;0.0572;0.0594;0.0616;0.0638;0.0659;0.0681;0.0703;0.0725;0.0747;0.0769;0.0791;0.0813;0.0834;0.0856;0.0878;0.09;0.0922;0.0944;0.0966;0.0988;0.1009;0.1031;0.1053;0.1075;0.1097;0.1119;0.1141;0.1163;0.1184;0.1206;0.1228;0.125;0.1272;0.1294;0.1316;0.1338;0.1359;0.1381;0.1403;0.1425;0.1447;0.1469;0.1491;0.97" values="30;38.4;46.8;55.2;63.6;72;80.4;88.8;97.2;105.6;114;122.4;130.8;139.2;147.6;156;164.4;172.8;181.2;189.6;198;206.4;214.8;223.2;231.6;240;248.4;256.8;265.2;273.6;282;290.4;298.8;307.2;315.6;324;332.4;340.8;349.2;357.6;366;374.4;382.8;391.2;399.6;408;416.4;424.8;433.2;441.6;450;458.4;30" repeatCount="indefinite"/>
   <animate attributeName="opacity" calcMode="discrete" dur="16s" keyTimes="0;0.1678" values="1;0" repeatCount="indefinite"/>
 </rect>
-<g style="animation: l1 16s linear infinite"><text class="mono" x="32" y="111" font-size="14"><tspan fill="#a78bfa">◆ </tspan><tspan fill="#f4f4fb">planning… </tspan><tspan fill="#9a9ab8">4 subtasks · 4 tools · 0 shortcuts</tspan></text></g>
-<g style="animation: l2 16s linear infinite"><text class="mono" x="32" y="138" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#60a5fa">node-agent</tspan><tspan fill="#f4f4fb">.spawn({ tools: 12, memory: &quot;long&quot; })</tspan></text></g>
-<text class="mono" x="868" y="138" font-size="13" fill="#34d399" text-anchor="end" style="animation: r2 16s linear infinite">✓ 182ms</text>
-<g style="animation: l3 16s linear infinite"><text class="mono" x="32" y="165" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#a78bfa">wake</tspan><tspan fill="#f4f4fb">.trace(&quot;chatgpt → your-site.com&quot;)</tspan></text></g>
-<text class="mono" x="868" y="165" font-size="13" fill="#34d399" text-anchor="end" style="animation: r3 16s linear infinite">✓ 96ms</text>
-<g style="animation: l4 16s linear infinite"><text class="mono" x="32" y="192" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#34d399">agentdog</tspan><tspan fill="#f4f4fb">.investigate(&quot;p99 spike in checkout&quot;)</tspan></text></g>
-<text class="mono" x="868" y="192" font-size="13" fill="#34d399" text-anchor="end" style="animation: r4 16s linear infinite">✓ 1.4s</text>
-<g style="animation: l5 16s linear infinite"><text class="mono" x="32" y="219" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#f472b6">receiptly</tspan><tspan fill="#f4f4fb">.itemize(&quot;$62.02 at Publix&quot;)</tspan></text></g>
-<text class="mono" x="868" y="219" font-size="13" fill="#34d399" text-anchor="end" style="animation: r5 16s linear infinite">✓ 311ms</text>
-<g style="animation: l6 16s linear infinite"><text class="mono" x="32" y="246" font-size="14"><tspan fill="#34d399">✓ </tspan><tspan fill="#f4f4fb">done </tspan><tspan fill="#9a9ab8">· 4/4 tasks · humans helped +1 · AGI eta: soon™</tspan></text></g>
-<g style="animation: l7 16s linear infinite"><text class="mono" x="32" y="273" font-size="14"><tspan fill="#34d399">❯ </tspan></text><rect class="blink" x="48.8" y="260" width="8" height="17" fill="#22d3ee"/></g>
-<text class="mono" x="868" y="296" font-size="11" fill="#55557a" text-anchor="end" style="animation: foot 16s linear infinite">tokens 12.4k · cost $0.03 · vibes ✓</text>
+<g style="animation: l1 16s linear infinite"><text class="mono" x="30" y="107" font-size="14"><tspan fill="#a78bfa">◆ </tspan><tspan fill="#f4f4fb">planning… </tspan><tspan fill="#9a9ab8">4 subtasks · 4 tools · 0 shortcuts</tspan></text></g>
+<g style="animation: l2 16s linear infinite"><text class="mono" x="30" y="134" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#60a5fa">node-agent</tspan><tspan fill="#f4f4fb">.spawn({ tools: 12, memory: &quot;long&quot; })</tspan></text></g>
+<text class="mono" x="824" y="134" font-size="13" fill="#34d399" text-anchor="end" style="animation: r2 16s linear infinite">✓ 182ms</text>
+<g style="animation: l3 16s linear infinite"><text class="mono" x="30" y="161" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#a78bfa">wake</tspan><tspan fill="#f4f4fb">.trace(&quot;chatgpt → your-site.com&quot;)</tspan></text></g>
+<text class="mono" x="824" y="161" font-size="13" fill="#34d399" text-anchor="end" style="animation: r3 16s linear infinite">✓ 96ms</text>
+<g style="animation: l4 16s linear infinite"><text class="mono" x="30" y="188" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#34d399">agentdog</tspan><tspan fill="#f4f4fb">.investigate(&quot;p99 spike in checkout&quot;)</tspan></text></g>
+<text class="mono" x="824" y="188" font-size="13" fill="#34d399" text-anchor="end" style="animation: r4 16s linear infinite">✓ 1.4s</text>
+<g style="animation: l5 16s linear infinite"><text class="mono" x="30" y="215" font-size="14"><tspan fill="#55557a">  ↳ </tspan><tspan fill="#f472b6">receiptly</tspan><tspan fill="#f4f4fb">.itemize(&quot;$62.02 at Publix&quot;)</tspan></text></g>
+<text class="mono" x="824" y="215" font-size="13" fill="#34d399" text-anchor="end" style="animation: r5 16s linear infinite">✓ 311ms</text>
+<g style="animation: l6 16s linear infinite"><text class="mono" x="30" y="242" font-size="14"><tspan fill="#34d399">✓ </tspan><tspan fill="#f4f4fb">done </tspan><tspan fill="#9a9ab8">· 4/4 tasks · humans helped +1 · AGI eta: soon™</tspan></text></g>
+<g style="animation: l7 16s linear infinite"><text class="mono" x="30" y="269" font-size="14"><tspan fill="#34d399">❯ </tspan></text><rect class="blink" x="46.8" y="256" width="8" height="17" fill="#22d3ee"/></g>
+<text class="mono" x="824" y="296" font-size="11" fill="#55557a" text-anchor="end" style="animation: foot 16s linear infinite">tokens 12.4k · cost $0.03 · vibes ✓</text>
 </g>
-<rect x=".5" y=".5" width="899" height="315" rx="16" fill="none" stroke="#23233a" stroke-width="1"/>
+<rect x=".5" y=".5" width="855" height="315" rx="11.5" fill="none" stroke="#fff" stroke-opacity=".09"/>
+<rect x="-.5" y="-.5" width="857" height="317" rx="12.5" fill="none" stroke="#000" stroke-opacity=".5"/>
+</g>
 </svg>

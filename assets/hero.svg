@@ -10,7 +10,11 @@
 </linearGradient>
   <radialGradient id="glowV"><stop offset="0" stop-color="#7c3aed" stop-opacity=".55"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
   <radialGradient id="glowC"><stop offset="0" stop-color="#06b6d4" stop-opacity=".35"/><stop offset="1" stop-color="#06b6d4" stop-opacity="0"/></radialGradient>
-  <radialGradient id="core" cx=".4" cy=".35"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#c4b5fd"/><stop offset=".75" stop-color="#7c3aed"/><stop offset="1" stop-color="#3b0764"/></radialGradient>
+  <radialGradient id="core" cx=".5" cy=".5" r=".5" fx=".34" fy=".3"><stop offset="0" stop-color="#fbf9ff"/><stop offset=".16" stop-color="#d9ceff"/><stop offset=".48" stop-color="#8b6cf0"/><stop offset=".82" stop-color="#4c1d95"/><stop offset="1" stop-color="#1c0a3d"/></radialGradient>
+  <linearGradient id="night" x1=".2" y1=".15" x2=".85" y2=".95"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#05010f" stop-opacity=".6"/></linearGradient>
+  <linearGradient id="rim" x1=".15" y1=".1" x2=".9" y2=".95"><stop offset=".55" stop-color="#67e8f9" stop-opacity="0"/><stop offset="1" stop-color="#67e8f9" stop-opacity=".9"/></linearGradient>
+  <radialGradient id="atmo"><stop offset=".62" stop-color="#a78bfa" stop-opacity="0"/><stop offset=".7" stop-color="#a78bfa" stop-opacity=".45"/><stop offset=".82" stop-color="#22d3ee" stop-opacity=".12"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+  <filter id="spec" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
   <radialGradient id="aura"><stop offset="0" stop-color="#a78bfa" stop-opacity=".7"/><stop offset=".5" stop-color="#22d3ee" stop-opacity=".15"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
   <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
   <linearGradient id="shine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="460" y2="0" spreadMethod="repeat">
@@ -101,9 +105,9 @@
 <circle cx="802.528" cy="173.0177" r="0.4296" fill="#fff" opacity="0.4326" style="animation: tw 3.0422s ease-in-out -0.0633s infinite"/>
 <circle cx="743.9376" cy="70.3899" r="1.2585" fill="#fff" opacity="0.3157" style="animation: tw 5.5313s ease-in-out -3.797s infinite"/>
 <circle cx="891.9362" cy="206.2395" r="1.3217" fill="#fff" opacity="0.705" style="animation: tw 4.8464s ease-in-out -2.7696s infinite"/>
-<ellipse class="ring" cx="700" cy="196" rx="172" ry="64" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7"/>
-<ellipse class="ring" cx="700" cy="196" rx="120" ry="46" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7"/>
-<ellipse class="ring" cx="700" cy="196" rx="70" ry="25" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7"/>
+<path class="ring" d="M 872 196 A 172 64 0 0 0 528 196" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7" opacity="0.45"/>
+<path class="ring" d="M 820 196 A 120 46 0 0 0 580 196" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7" opacity="0.45"/>
+<path class="ring" d="M 770 196 A 70 25 0 0 0 630 196" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7" opacity="0.45"/>
 <circle class="pulse" cx="700" cy="196" r="70" fill="url(#aura)"/>
 <circle cx="700" cy="196" r="1.0769" fill="#22d3ee" style="animation: p0 4.0799s ease-out -3.8782s infinite"/>
 <circle cx="700" cy="196" r="2.1339" fill="#a78bfa" style="animation: p1 2.5365s ease-out -2.8465s infinite"/>
@@ -113,36 +117,63 @@
 <circle cx="700" cy="196" r="1.4259" fill="#ffffff" style="animation: p5 4.8043s ease-out -0.3961s infinite"/>
 <circle cx="700" cy="196" r="1.9583" fill="#22d3ee" style="animation: p6 2.7846s ease-out -0.8234s infinite"/>
 <circle cx="700" cy="196" r="2.1535" fill="#a78bfa" style="animation: p7 3.1035s ease-out -0.6014s infinite"/>
-<circle cx="700" cy="196" r="30" fill="url(#core)" filter="url(#glow)"/>
-<text class="mono" x="700" y="201" font-size="14" font-weight="800" fill="#1e1036" text-anchor="middle" letter-spacing=".08em">AGI</text>
+<circle cx="700" cy="196" r="48" fill="url(#atmo)"/>
+<circle cx="700" cy="196" r="30" fill="url(#core)"/>
+<circle cx="700" cy="196" r="30" fill="url(#night)"/>
+<circle cx="700" cy="196" r="29.4" fill="none" stroke="url(#rim)" stroke-width="1.4"/>
+<ellipse cx="690" cy="184" rx="7" ry="4.2" fill="#ffffff" opacity=".55" filter="url(#spec)" transform="rotate(-28 690 184)"/>
+<text class="mono" x="700" y="201" font-size="13" font-weight="800" fill="#ffffff" fill-opacity=".92" text-anchor="middle" letter-spacing=".1em" stroke="#2e1065" stroke-opacity=".5" stroke-width="2" paint-order="stroke">AGI</text>
+<path class="ring" d="M 528 196 A 172 64 0 0 0 872 196" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7" opacity="0.95"/>
+<path class="ring" d="M 580 196 A 120 46 0 0 0 820 196" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7" opacity="0.95"/>
+<path class="ring" d="M 630 196 A 70 25 0 0 0 770 196" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7" opacity="0.95"/>
 <g>
-  <circle r="5" fill="#f472b6" filter="url(#glow)"/>
-  <circle r="11" fill="none" stroke="#f472b6" stroke-opacity=".35"/>
-  <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">humans</text>
+  <g>
+    <circle r="5" fill="#f472b6" filter="url(#glow)"/>
+    <circle r="11" fill="none" stroke="#f472b6" stroke-opacity=".35"/>
+    <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">humans</text>
+    <animateTransform attributeName="transform" type="scale" values="1;1.18;1;.72;1" dur="36s" begin="-5.4s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
+  </g>
+  <animate attributeName="opacity" values=".85;1;.85;.38;.85" dur="36s" begin="-5.4s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
   <animateMotion dur="36s" begin="-5.4s" repeatCount="indefinite" path="M 872 196 A 172 64 0 1 1 528 196 A 172 64 0 1 1 872 196"/>
 </g>
 <g>
-  <circle r="5" fill="#22d3ee" filter="url(#glow)"/>
-  <circle r="11" fill="none" stroke="#22d3ee" stroke-opacity=".35"/>
-  <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">agents</text>
+  <g>
+    <circle r="5" fill="#22d3ee" filter="url(#glow)"/>
+    <circle r="11" fill="none" stroke="#22d3ee" stroke-opacity=".35"/>
+    <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">agents</text>
+    <animateTransform attributeName="transform" type="scale" values="1;1.18;1;.72;1" dur="36s" begin="-17.4s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
+  </g>
+  <animate attributeName="opacity" values=".85;1;.85;.38;.85" dur="36s" begin="-17.4s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
   <animateMotion dur="36s" begin="-17.4s" repeatCount="indefinite" path="M 872 196 A 172 64 0 1 1 528 196 A 172 64 0 1 1 872 196"/>
 </g>
 <g>
-  <circle r="5" fill="#a78bfa" filter="url(#glow)"/>
-  <circle r="11" fill="none" stroke="#a78bfa" stroke-opacity=".35"/>
-  <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">MCP</text>
+  <g>
+    <circle r="5" fill="#a78bfa" filter="url(#glow)"/>
+    <circle r="11" fill="none" stroke="#a78bfa" stroke-opacity=".35"/>
+    <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">MCP</text>
+    <animateTransform attributeName="transform" type="scale" values="1;1.18;1;.72;1" dur="36s" begin="-29.4s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
+  </g>
+  <animate attributeName="opacity" values=".85;1;.85;.38;.85" dur="36s" begin="-29.4s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
   <animateMotion dur="36s" begin="-29.4s" repeatCount="indefinite" path="M 872 196 A 172 64 0 1 1 528 196 A 172 64 0 1 1 872 196"/>
 </g>
 <g>
-  <circle r="5" fill="#34d399" filter="url(#glow)"/>
-  <circle r="11" fill="none" stroke="#34d399" stroke-opacity=".35"/>
-  <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">tools</text>
+  <g>
+    <circle r="5" fill="#34d399" filter="url(#glow)"/>
+    <circle r="11" fill="none" stroke="#34d399" stroke-opacity=".35"/>
+    <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">tools</text>
+    <animateTransform attributeName="transform" type="scale" values="1;1.18;1;.72;1" dur="26s" begin="-3.9s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
+  </g>
+  <animate attributeName="opacity" values=".85;1;.85;.38;.85" dur="26s" begin="-3.9s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
   <animateMotion dur="26s" begin="-3.9s" repeatCount="indefinite" path="M 820 196 A 120 46 0 1 1 580 196 A 120 46 0 1 1 820 196"/>
 </g>
 <g>
-  <circle r="5" fill="#60a5fa" filter="url(#glow)"/>
-  <circle r="11" fill="none" stroke="#60a5fa" stroke-opacity=".35"/>
-  <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">memory</text>
+  <g>
+    <circle r="5" fill="#60a5fa" filter="url(#glow)"/>
+    <circle r="11" fill="none" stroke="#60a5fa" stroke-opacity=".35"/>
+    <text class="mono" x="15" y="4" font-size="11" fill="#f4f4fb" stroke="#07070d" stroke-width="4" stroke-linejoin="round" paint-order="stroke">memory</text>
+    <animateTransform attributeName="transform" type="scale" values="1;1.18;1;.72;1" dur="26s" begin="-16.9s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
+  </g>
+  <animate attributeName="opacity" values=".85;1;.85;.38;.85" dur="26s" begin="-16.9s" repeatCount="indefinite" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1;.45 0 .55 1"/>
   <animateMotion dur="26s" begin="-16.9s" repeatCount="indefinite" path="M 820 196 A 120 46 0 1 1 580 196 A 120 46 0 1 1 820 196"/>
 </g>
 <g class="rise">
@@ -165,7 +196,7 @@
 <g class="rise" style="animation-delay:4.96s">
   <rect x="40" y="268" width="150" height="62" rx="12" fill="#ffffff" fill-opacity=".03" stroke="#a78bfa" stroke-opacity=".35"/>
   <circle cx="56" cy="286" r="3" fill="#a78bfa" filter="url(#glow)"/>
-  <text class="sans" x="56" y="312" font-size="22" font-weight="700" fill="#f4f4fb">16,791</text>
+  <text class="sans" x="56" y="312" font-size="22" font-weight="700" fill="#f4f4fb">16,799</text>
   <text class="mono" x="66" y="289" font-size="10" fill="#9a9ab8" letter-spacing=".04em">contributions / yr</text>
 </g>
 <g class="rise" style="animation-delay:5.11s">
