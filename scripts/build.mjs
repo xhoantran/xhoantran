@@ -100,9 +100,33 @@ function steps(n, start, step, dur, value) {
 const discrete = (attr, dur, times, vals, loop) =>
   `<animate attributeName="${attr}" calcMode="discrete" dur="${dur}s" keyTimes="${times.join(";")}" values="${vals.join(";")}" ${loop ? 'repeatCount="indefinite"' : 'fill="freeze"'}/>`;
 
-async function fetchData() {
+async function gql(query, variables) {
   const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
   if (!token) throw new Error("Set GH_TOKEN to a GitHub token");
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: { Authorization: `bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ query, variables }),
+  });
+  const json = await res.json();
+  if (json.errors) throw new Error(JSON.stringify(json.errors));
+  return json.data;
+}
+
+// The year before `date` (exclusive), oldest day first.
+async function fetchYearBefore(date) {
+  const to = new Date(date + "T00:00:00Z");
+  const from = new Date(to);
+  from.setUTCDate(from.getUTCDate() - 365);
+  const data = await gql(`query($login: String!, $from: DateTime!, $to: DateTime!) {
+    user(login: $login) { contributionsCollection(from: $from, to: $to) { contributionCalendar { weeks { contributionDays { date contributionCount } } } } }
+  }`, { login: LOGIN, from: from.toISOString(), to: new Date(to - 1000).toISOString() });
+  return data.user.contributionsCollection.contributionCalendar.weeks
+    .flatMap((w) => w.contributionDays)
+    .filter((d) => d.date < date && d.date >= from.toISOString().slice(0, 10));
+}
+
+async function fetchData() {
   const repoFields = "name stargazerCount primaryLanguage { name color }";
   const aliases = PROJECTS.map((p, i) => `r${i}: repository(owner: $login, name: "${p.repo}") { ${repoFields} }`).join("\n");
   const query = `query($login: String!) {
@@ -112,17 +136,11 @@ async function fetchData() {
     }
     ${aliases}
   }`;
-  const res = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: { Authorization: `bearer ${token}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables: { login: LOGIN } }),
-  });
-  const json = await res.json();
-  if (json.errors) throw new Error(JSON.stringify(json.errors));
-  const { user } = json.data;
-  return { user, repos: PROJECTS.map((p, i) => ({ ...p, ...json.data[`r${i}`] })) };
+  const data = await gql(query, { login: LOGIN });
+  return { user: data.user, repos: PROJECTS.map((p, i) => ({ ...p, ...data[`r${i}`] })) };
 }
 
+// Streaks are counted over `days` (which may reach back several years), busiest day over the last year only.
 function streaks(days) {
   let longest = 0;
   let run = 0;
@@ -135,8 +153,7 @@ function streaks(days) {
   let i = days.length - 1;
   if (days[i]?.contributionCount === 0) i--;
   for (; i >= 0 && days[i].contributionCount > 0; i--) current++;
-  const busiest = days.reduce((a, b) => (b.contributionCount > a.contributionCount ? b : a));
-  return { longest, current, busiest };
+  return { longest, current };
 }
 
 const shortDate = (iso) => new Date(iso + "T00:00:00Z").toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
@@ -445,12 +462,20 @@ ${layers}
 const { user, repos } = await fetchData();
 const cal = user.contributionsCollection.contributionCalendar;
 const days = cal.weeks.flatMap((w) => w.contributionDays);
+// A streak that starts at the edge of the calendar keeps going into earlier years.
+let history = days;
+for (let y = 0; y < 10 && history[0].contributionCount > 0; y++) {
+  const earlier = await fetchYearBefore(history[0].date);
+  if (!earlier.length) break;
+  history = [...earlier, ...history];
+}
 const stats = {
   total: cal.totalContributions,
   weeks: cal.weeks,
   stars: user.repositories.nodes.reduce((sum, r) => sum + r.stargazerCount, 0),
   today: new Date().toISOString().slice(0, 10),
-  ...streaks(days),
+  busiest: days.reduce((a, b) => (b.contributionCount > a.contributionCount ? b : a)),
+  ...streaks(history),
 };
 
 rmSync(OUT, { recursive: true, force: true });
