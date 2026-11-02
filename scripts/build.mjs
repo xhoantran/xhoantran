@@ -1,35 +1,35 @@
 // Generates the SVGs used by README.md from live GitHub data.
 // Usage: GH_TOKEN=... node scripts/build.mjs
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 
 const LOGIN = "xhoantran";
 const OUT = new URL("../assets/", import.meta.url);
 
-const PROJECTS = [
-  { repo: "iphone-use", color: 1, span: "agents.act", blurb: "Let an AI agent use a real iPhone from your Mac. Screen over USB, taps over Bluetooth, no app on the phone." },
-  { repo: "wake", color: 2, span: "agents.trace", blurb: "See what ChatGPT, Claude and Perplexity read on your website, and which sales those agent visits lead to." },
-  { repo: "agentdog", color: 2, span: "agents.observe", blurb: "Open-source observability on OpenTelemetry, Tempo, Loki and Mimir, with a Claude agent that investigates." },
-  { repo: "receiptly", color: 3, span: "humans.help", blurb: "Item-level receipts from any merchant. Plaid gives the transaction; receiptly fetches the itemized receipt." },
-  { repo: "open-interview-coder", color: 3, span: "humans.help", blurb: "Desktop AI helper for coding interviews. Screenshot the problem, get a worked solution, bring your own key." },
-  { repo: "node-agent", color: 0, span: "agents.build", blurb: "TypeScript agent framework: streaming tool loops, hooks, context compaction, Redis and DynamoDB state." },
-];
-
-const THEMES = {
-  dark: {
-    bg: "#0d1117", border: "#30363d", ink: "#e6edf3", muted: "#8b949e", faint: "#21262d", grid: "#161b22",
-    spans: ["#a78bfa", "#34d399", "#fbbf24", "#f472b6", "#60a5fa", "#fb923c"],
-  },
-  light: {
-    bg: "#ffffff", border: "#d0d7de", ink: "#1f2328", muted: "#59636e", faint: "#eaeef2", grid: "#f6f8fa",
-    spans: ["#7c3aed", "#059669", "#d97706", "#db2777", "#2563eb", "#c2410c"],
-  },
+const C = {
+  bg: "#07070d", panel: "#0b0b14", line: "#23233a", ink: "#f4f4fb", muted: "#9a9ab8", dim: "#55557a",
+  violet: "#a78bfa", cyan: "#22d3ee", green: "#34d399", pink: "#f472b6", amber: "#fbbf24", blue: "#60a5fa",
 };
+
+const PROJECTS = [
+  { repo: "iphone-use", color: C.cyan, blurb: "Let an AI agent use a real iPhone from your Mac: screen over USB, taps over Bluetooth." },
+  { repo: "wake", color: C.violet, blurb: "See what ChatGPT, Claude and Perplexity read on your website, and which sales those agent visits lead to." },
+  { repo: "agentdog", color: C.green, blurb: "Open-source observability on OpenTelemetry, Tempo, Loki and Mimir, with a Claude agent that investigates." },
+  { repo: "receiptly", color: C.pink, blurb: "Item-level receipts from any merchant. Plaid gives the transaction; receiptly fetches the itemized receipt." },
+  { repo: "open-interview-coder", color: C.amber, blurb: "AI coding-interview helper: screenshot the problem, get a worked solution, bring your own key." },
+  { repo: "node-agent", color: C.blue, blurb: "TypeScript agent framework: streaming tool loops, hooks, context compaction, Redis and DynamoDB state." },
+];
 
 const SANS = `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif`;
 const MONO = `ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace`;
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const fmt = (n) => n.toLocaleString("en-US");
+const f4 = (n) => +n.toFixed(4);
+
+// Seeded so the starfield and particles don't change (and commit) on every daily run.
+function rng(seed) {
+  return () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32);
+}
 
 function wrap(text, max) {
   const lines = [];
@@ -45,19 +45,60 @@ function wrap(text, max) {
   return line ? [...lines, line] : lines;
 }
 
-function svg(w, h, title, style, body) {
+function mix(a, b, t) {
+  const pa = a.match(/\w\w/g).map((h) => parseInt(h, 16));
+  const pb = b.match(/\w\w/g).map((h) => parseInt(h, 16));
+  return "#" + pa.map((v, i) => Math.round(v + (pb[i] - v) * t).toString(16).padStart(2, "0")).join("");
+}
+
+function svg(w, h, title, { defs = "", style = "" }, body) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(title)}">
 <title>${esc(title)}</title>
+<defs>
+  <clipPath id="frame"><rect width="${w}" height="${h}" rx="16"/></clipPath>
+  <filter id="glow" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="haze" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="16"/></filter>
+  ${defs}
+</defs>
 <style>
   .sans { font-family: ${SANS}; }
   .mono { font-family: ${MONO}; }
+  .blink { animation: blink 1.1s steps(1) infinite; }
+  .rise { animation: rise .9s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   ${style}
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>
+<g clip-path="url(#frame)">
 ${body}
+</g>
+<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="16" fill="none" stroke="url(#edge)" stroke-width="1"/>
 </svg>
 `;
 }
+
+// A border gradient that slowly travels around the frame.
+function edge(w, h, a, b) {
+  return `<linearGradient id="edge" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${w}" y2="0">
+  <stop offset="0" stop-color="${a}"/><stop offset=".3" stop-color="${C.line}"/><stop offset=".7" stop-color="${C.line}"/><stop offset="1" stop-color="${b}"/>
+  <animateTransform attributeName="gradientTransform" type="rotate" from="0 ${w / 2} ${h / 2}" to="360 ${w / 2} ${h / 2}" dur="9s" repeatCount="indefinite"/>
+</linearGradient>`;
+}
+
+// Discrete SMIL keyframes: value(i) for i = 0..n, step i landing at start + i * step seconds.
+function steps(n, start, step, dur, value) {
+  const times = [0];
+  const vals = [value(0)];
+  for (let i = 1; i <= n; i++) {
+    times.push(f4((start + i * step) / dur));
+    vals.push(value(i));
+  }
+  return { times, vals };
+}
+
+const discrete = (attr, dur, times, vals, loop) =>
+  `<animate attributeName="${attr}" calcMode="discrete" dur="${dur}s" keyTimes="${times.join(";")}" values="${vals.join(";")}" ${loop ? 'repeatCount="indefinite"' : 'fill="freeze"'}/>`;
 
 async function fetchData() {
   const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
@@ -66,8 +107,7 @@ async function fetchData() {
   const aliases = PROJECTS.map((p, i) => `r${i}: repository(owner: $login, name: "${p.repo}") { ${repoFields} }`).join("\n");
   const query = `query($login: String!) {
     user(login: $login) {
-      createdAt
-      repositories(ownerAffiliations: OWNER, privacy: PUBLIC, isFork: false, first: 100) { totalCount nodes { stargazerCount } }
+      repositories(ownerAffiliations: OWNER, privacy: PUBLIC, isFork: false, first: 100) { nodes { stargazerCount } }
       contributionsCollection { contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } } }
     }
     ${aliases}
@@ -80,10 +120,7 @@ async function fetchData() {
   const json = await res.json();
   if (json.errors) throw new Error(JSON.stringify(json.errors));
   const { user } = json.data;
-  return {
-    user,
-    repos: PROJECTS.map((p, i) => ({ ...p, ...json.data[`r${i}`] })),
-  };
+  return { user, repos: PROJECTS.map((p, i) => ({ ...p, ...json.data[`r${i}`] })) };
 }
 
 function streaks(days) {
@@ -102,160 +139,307 @@ function streaks(days) {
   return { longest, current, busiest };
 }
 
-function header(t, stats) {
-  const W = 880, H = 384;
-  const x0 = 236, x1 = 848, span = x1 - x0;
-  const rows = [
-    { name: "hoan.tran", start: 0, end: 1, label: `${fmt(stats.total)} contributions / yr`, root: true },
-    { name: "agents.build", color: 0, start: 0.03, end: 0.52, label: "node-agent · cortex" },
-    { name: "agents.observe", color: 2, start: 0.18, end: 0.66, label: "wake · agentdog" },
-    { name: "humans.help", color: 3, start: 0.34, end: 0.6, label: "receiptly" },
-    { name: "stealth", start: 0.5, end: 0.86, label: "████ ██████ ███", redacted: true },
-    { name: "agi", color: 4, start: 0.7, end: 1, label: "in progress…", open: true },
+const shortDate = (iso) => new Date(iso + "T00:00:00Z").toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+
+function hero(s) {
+  const W = 900, H = 440;
+  const rand = rng(7);
+
+  const stars = Array.from({ length: 110 }, () => {
+    const r = f4(0.3 + rand() * 1.2);
+    return `<circle cx="${f4(rand() * W)}" cy="${f4(rand() * H)}" r="${r}" fill="#fff" opacity="${f4(0.25 + rand() * 0.6)}" style="animation: tw ${f4(2 + rand() * 4)}s ease-in-out ${f4(-rand() * 6)}s infinite"/>`;
+  }).join("\n");
+
+  // Tagline typed out, one character per step, with a caret that follows along.
+  const cw = 10.2, tx = 40, y1 = 204, y2 = 232, step = 0.045, s1 = 1.0;
+  const t1 = "I build AI agents that work for people,";
+  const t2 = "on the road to AGI that helps humanity.";
+  const s2 = s1 + t1.length * step + 0.25;
+  const dur = f4(s2 + t2.length * step + 0.1);
+  const w1 = steps(t1.length, s1, step, dur, (i) => f4(i * cw));
+  const w2 = steps(t2.length, s2, step, dur, (i) => f4(i * cw));
+  const caretTimes = [...w1.times, f4(s2 / dur), ...w2.times.slice(1)];
+  const caretX = [...w1.vals.map((v) => f4(tx + v)), tx, ...w2.vals.slice(1).map((v) => f4(tx + v))];
+  const caretY = [...w1.vals.map(() => y1 - 15), ...Array(w2.vals.length).fill(y2 - 15)];
+  const typed = (id, y, text, w) => `<clipPath id="${id}"><rect x="${tx}" y="${y - 17}" height="24" width="${text.length * cw + 20}">${discrete("width", dur, w.times, w.vals)}</rect></clipPath>
+<text class="mono" x="${tx}" y="${y}" font-size="17" fill="${C.muted}" clip-path="url(#${id})">${esc(text)}</text>`;
+
+  const chips = [
+    [fmt(s.total), "contributions / yr", C.violet],
+    [`${s.current}`, "day streak", C.cyan],
+    [`★ ${fmt(s.stars)}`, "stars earned", C.amber],
+  ].map(([v, k, color], i) => {
+    const x = 40 + i * 162;
+    return `<g class="rise" style="animation-delay:${f4(s2 + t2.length * step + 0.2 + i * 0.15)}s">
+  <rect x="${x}" y="268" width="150" height="62" rx="12" fill="#ffffff" fill-opacity=".03" stroke="${color}" stroke-opacity=".35"/>
+  <circle cx="${x + 16}" cy="286" r="3" fill="${color}" filter="url(#glow)"/>
+  <text class="sans" x="${x + 16}" y="${312}" font-size="22" font-weight="700" fill="${C.ink}">${esc(v)}</text>
+  <text class="mono" x="${x + 26}" y="289" font-size="10" fill="${C.muted}" letter-spacing=".04em">${esc(k)}</text>
+</g>`;
+  }).join("\n");
+
+  // Agents and their friends orbit an AGI core.
+  const cx = 690, cy = 222;
+  const rings = [
+    { rx: 186, ry: 64, dur: 30, nodes: [["humans", C.pink], ["agents", C.cyan], ["evals", C.amber]] },
+    { rx: 132, ry: 45, dur: 21, nodes: [["tools", C.green], ["memory", C.blue]] },
+    { rx: 80, ry: 27, dur: 13, nodes: [["MCP", C.violet]] },
   ];
-  const top = 236, rowH = 24, barH = 12;
+  const orbitPath = (rx, ry) => `M ${cx + rx} ${cy} A ${rx} ${ry} 0 1 1 ${cx - rx} ${cy} A ${rx} ${ry} 0 1 1 ${cx + rx} ${cy}`;
+  const ringEls = rings.map((r) => `<ellipse class="ring" cx="${cx}" cy="${cy}" rx="${r.rx}" ry="${r.ry}" fill="none" stroke="url(#ringGrad)" stroke-width="1" stroke-dasharray="2 7"/>`).join("\n");
+  const nodeEls = rings.flatMap((r) => r.nodes.map(([label, color], k) => `<g>
+  <circle r="5" fill="${color}" filter="url(#glow)"/>
+  <circle r="11" fill="none" stroke="${color}" stroke-opacity=".35"/>
+  <text class="mono" x="15" y="4" font-size="11" fill="${C.ink}">${label}</text>
+  <animateMotion dur="${r.dur}s" begin="${f4(-(r.dur * k) / r.nodes.length - r.dur * 0.15)}s" repeatCount="indefinite" path="${orbitPath(r.rx, r.ry)}"/>
+</g>`)).join("\n");
 
-  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f, i) => {
-    const x = x0 + f * span;
-    const label = ["0", "250ms", "500ms", "750ms", "1s"][i];
-    return `<line x1="${x}" y1="${top - 14}" x2="${x}" y2="${top + rows.length * rowH - 6}" stroke="${t.faint}" stroke-width="1"/>
-<text class="mono" x="${x}" y="${top - 20}" font-size="10" fill="${t.muted}" text-anchor="${i === 4 ? "end" : i === 0 ? "start" : "middle"}">${label}</text>`;
-  }).join("\n");
+  const particles = Array.from({ length: 16 }, (_, i) => {
+    const a = rand() * Math.PI * 2;
+    const d = 70 + rand() * 120;
+    const dx = f4(Math.cos(a) * d), dy = f4(Math.sin(a) * d * 0.45);
+    return { el: `<circle cx="${cx}" cy="${cy}" r="${f4(0.8 + rand() * 1.4)}" fill="${[C.cyan, C.violet, "#ffffff"][i % 3]}" style="animation: p${i} ${f4(2.5 + rand() * 2.5)}s ease-out ${f4(-rand() * 4)}s infinite"/>`,
+      kf: `@keyframes p${i} { 0% { transform: translate(0,0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(${dx}px, ${dy}px); opacity: 0; } }` };
+  });
 
-  const lastChildY = top + (rows.length - 1) * rowH;
-  const tree = `<path d="M38 ${top + 6} V${lastChildY}" stroke="${t.border}" fill="none"/>` +
-    rows.slice(1).map((_, i) => `<path d="M38 ${top + (i + 1) * rowH} H48" stroke="${t.border}" fill="none"/>`).join("");
-
-  const bars = rows.map((r, i) => {
-    const y = top + i * rowH;
-    const bx = x0 + r.start * span;
-    const bw = (r.end - r.start) * span;
-    const color = r.root || r.redacted ? t.muted : t.spans[r.color];
-    const delay = (0.35 + i * 0.22).toFixed(2);
-    const labelW = r.label.length * 6.6;
-    const after = bx + bw + 8 + labelW <= x1;
-    const lx = r.root ? bx + 8 : after ? bx + bw + 8 : bx - 8;
-    const anchor = r.root || after ? "start" : "end";
-    const labelFill = r.root ? t.ink : t.muted;
-    // An open span is still running: a pulsing head at the end of the timeline.
-    const head = r.open ? `\n<circle class="pulse" cx="${x1}" cy="${y}" r="5" fill="${color}"/>` : "";
-    return `<text class="mono" x="${r.root ? 32 : 54}" y="${y + 4}" font-size="12" fill="${r.root ? t.ink : t.muted}">${esc(r.name)}</text>
-<rect class="bar" style="animation-delay:${delay}s" x="${bx}" y="${y - 6}" width="${bw}" height="${barH}" rx="3" fill="${color}" fill-opacity="${r.root ? 0.3 : 0.9}"/>
-<text class="mono label" style="animation-delay:${(+delay + 0.45).toFixed(2)}s" x="${lx}" y="${y + 4}" font-size="11" fill="${labelFill}" text-anchor="${anchor}">${esc(r.label)}</text>${head}`;
-  }).join("\n");
+  const defs = `${edge(W, H, C.violet, C.cyan)}
+  <radialGradient id="glowV"><stop offset="0" stop-color="#7c3aed" stop-opacity=".55"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glowC"><stop offset="0" stop-color="#06b6d4" stop-opacity=".35"/><stop offset="1" stop-color="#06b6d4" stop-opacity="0"/></radialGradient>
+  <radialGradient id="core" cx=".4" cy=".35"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#c4b5fd"/><stop offset=".75" stop-color="#7c3aed"/><stop offset="1" stop-color="#3b0764"/></radialGradient>
+  <radialGradient id="aura"><stop offset="0" stop-color="#a78bfa" stop-opacity=".7"/><stop offset=".5" stop-color="#22d3ee" stop-opacity=".15"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+  <linearGradient id="ringGrad" x1="0" x2="1"><stop offset="0" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.cyan}"/></linearGradient>
+  <linearGradient id="shine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="460" y2="0" spreadMethod="repeat">
+    <stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#c4b5fd"/><stop offset=".55" stop-color="#67e8f9"/><stop offset=".8" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/>
+    <animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="460 0" dur="7s" repeatCount="indefinite"/>
+  </linearGradient>`;
 
   const style = `
-  .bar { transform-box: fill-box; transform-origin: left center; animation: grow .7s cubic-bezier(.2,.8,.2,1) both; }
-  .label { animation: fade .4s ease-out both; }
-  .rise { animation: rise .8s cubic-bezier(.2,.8,.2,1) both; }
-  .cursor { animation: sweep 2.6s cubic-bezier(.4,0,.2,1) .3s both; }
-  .pulse { animation: pulse 2s ease-in-out infinite; }
-  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  @keyframes sweep { 0% { transform: translateX(0); opacity: 0; } 8% { opacity: .9; } 85% { opacity: .9; } 100% { transform: translateX(${span}px); opacity: 0; } }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }`;
+  @keyframes tw { 0%, 100% { opacity: .15; } 50% { opacity: .9; } }
+  .ring { animation: flow 24s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -180; } }
+  .pulse { transform-box: fill-box; transform-origin: center; animation: pulse 3.2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.18); opacity: 1; } }
+  .dot { animation: dot 1.6s ease-in-out infinite; }
+  @keyframes dot { 50% { opacity: .2; } }
+  ${particles.map((p) => p.kf).join("\n  ")}`;
 
-  const body = `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12" fill="${t.bg}" stroke="${t.border}"/>
-<text class="mono" x="32" y="28" font-size="11" fill="${t.muted}" letter-spacing=".06em">TRACE <tspan fill="${t.ink}">4e1d·c0de·7a11</tspan>  ·  github.com/${LOGIN}</text>
-<circle class="pulse" cx="${W - 70}" cy="24" r="4" fill="${t.spans[1]}"/>
-<text class="mono" x="${W - 32}" y="28" font-size="11" fill="${t.muted}" text-anchor="end" letter-spacing=".06em">LIVE</text>
-<line x1="0" y1="44" x2="${W}" y2="44" stroke="${t.faint}"/>
+  const body = `<rect width="${W}" height="${H}" fill="${C.bg}"/>
+<circle cx="120" cy="40" r="360" fill="url(#glowV)"/>
+<circle cx="820" cy="430" r="380" fill="url(#glowC)"/>
+${stars}
+${ringEls}
+<circle class="pulse" cx="${cx}" cy="${cy}" r="70" fill="url(#aura)"/>
+${particles.map((p) => p.el).join("\n")}
+<circle cx="${cx}" cy="${cy}" r="30" fill="url(#core)" filter="url(#glow)"/>
+<text class="mono" x="${cx}" y="${cy + 5}" font-size="14" font-weight="800" fill="#1e1036" text-anchor="middle" letter-spacing=".08em">AGI</text>
+${nodeEls}
 <g class="rise">
-  <text class="sans" x="32" y="104" font-size="42" font-weight="700" fill="${t.ink}" letter-spacing="-.02em">Hoan Tran</text>
-  <text class="sans" x="32" y="138" font-size="17" fill="${t.muted}">I build AI agents that work for people,</text>
-  <text class="sans" x="32" y="162" font-size="17" fill="${t.muted}">on the road to AGI that helps humanity.</text>
+  <rect x="40" y="38" width="226" height="26" rx="13" fill="#ffffff" fill-opacity=".04" stroke="${C.green}" stroke-opacity=".4"/>
+  <circle class="dot" cx="56" cy="51" r="4" fill="${C.green}" filter="url(#glow)"/>
+  <text class="mono" x="68" y="55" font-size="11" fill="${C.ink}" letter-spacing=".08em">ONLINE · BUILDING IN STEALTH</text>
 </g>
-<g class="rise" style="animation-delay:.15s">
-  <text class="mono" x="${W - 32}" y="88" font-size="11" fill="${t.muted}" text-anchor="end" letter-spacing=".06em">CURRENTLY</text>
-  <text class="sans" x="${W - 32}" y="112" font-size="17" font-weight="600" fill="${t.ink}" text-anchor="end">building in stealth</text>
-  <text class="mono" x="${W - 32}" y="136" font-size="11" fill="${t.muted}" text-anchor="end">agents · AGI · humans first</text>
+<g class="rise" style="animation-delay:.2s">
+  <text class="sans" x="40" y="152" font-size="72" font-weight="800" fill="${C.violet}" letter-spacing="-.035em" filter="url(#haze)" opacity=".55">Hoan Tran</text>
+  <text class="sans" x="40" y="152" font-size="72" font-weight="800" fill="url(#shine)" letter-spacing="-.035em">Hoan Tran</text>
 </g>
-<line x1="32" y1="194" x2="${W - 32}" y2="194" stroke="${t.faint}"/>
-<text class="mono" x="32" y="${top - 20}" font-size="10" fill="${t.muted}" letter-spacing=".06em">SPAN</text>
-${ticks}
-${tree}
-${bars}
-<line class="cursor" x1="${x0}" y1="${top - 12}" x2="${x0}" y2="${top + rows.length * rowH - 8}" stroke="${t.ink}" stroke-width="1.5"/>`;
+${typed("tl1", y1, t1, w1)}
+${typed("tl2", y2, t2, w2)}
+<rect class="blink" width="9" height="19" fill="${C.cyan}" x="${caretX.at(-1)}" y="${y2 - 15}">
+  ${discrete("x", dur, caretTimes, caretX)}
+  ${discrete("y", dur, caretTimes, caretY)}
+</rect>
+${chips}
+<text class="mono rise" style="animation-delay:5.4s" x="40" y="${H - 40}" font-size="11" fill="${C.dim}" letter-spacing=".08em">AGENTS · MCP · EVALS · OBSERVABILITY · HUMANS FIRST</text>`;
 
-  return svg(W, H, "Hoan Tran: I build AI agents that work for people, on the road to AGI that helps humanity.", style, body);
+  return svg(W, H, "Hoan Tran: I build AI agents that work for people, on the road to AGI that helps humanity.", { defs, style }, body);
 }
 
-function activity(t, stats) {
-  const W = 880, H = 236;
-  const weeks = stats.weeks.slice(-52);
-  const totals = weeks.map((w) => w.contributionDays.reduce((s, d) => s + d.contributionCount, 0));
-  const max = Math.max(...totals, 1);
-  const cx0 = 316, cx1 = 848, base = 188, maxH = 118;
-  const slot = (cx1 - cx0) / weeks.length;
-  const bw = slot - 3;
-  const accent = t.spans[1];
+function terminal() {
+  const W = 900, H = 340, T = 16, cw = 8.4, x = 32, top = 84, lh = 27;
+  const tool = (name, color, call, ms) => ({ parts: [["  ↳ ", C.dim], [name, color], [call, C.ink]], right: `✓ ${ms}` });
+  const lines = [
+    { parts: [["❯ ", C.green], ["agent run ", C.ink], ['"make life easier for 8 billion people"', C.amber]] },
+    { parts: [["◆ ", C.violet], ["planning… ", C.ink], ["4 subtasks · 4 tools · 0 shortcuts", C.muted]], at: 3.0 },
+    { ...tool("node-agent", C.blue, '.spawn({ tools: 12, memory: "long" })', "182ms"), at: 3.8 },
+    { ...tool("wake", C.violet, '.trace("chatgpt → your-site.com")', "96ms"), at: 4.5 },
+    { ...tool("agentdog", C.green, '.investigate("p99 spike in checkout")', "1.4s"), at: 5.2 },
+    { ...tool("receiptly", C.pink, '.itemize("$62.02 at Publix")', "311ms"), at: 5.9 },
+    { parts: [["✓ ", C.green], ["done ", C.ink], ["· 4/4 tasks · humans helped +1 · AGI eta: soon™", C.muted]], at: 7.0 },
+    { parts: [["❯ ", C.green]], at: 7.6, caret: true },
+  ];
+  const pct = (t) => f4((t / T) * 100);
+  const spans = (parts) => parts.map(([t, c]) => `<tspan fill="${c}">${esc(t)}</tspan>`).join("");
 
-  const bars = totals.map((v, i) => {
-    const h = Math.max(2, (v / max) * maxH);
-    const x = cx0 + i * slot;
-    const last = i === totals.length - 1;
-    return `<rect class="col" style="animation-delay:${(0.2 + i * 0.018).toFixed(3)}s" x="${x.toFixed(1)}" y="${(base - h).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="1.5" fill="${accent}" fill-opacity="${last ? 1 : 0.75}"><title>Week of ${weeks[i].contributionDays[0].date}: ${fmt(v)}</title></rect>`;
+  // The first line is typed; the rest print in sequence. The whole run loops.
+  const first = lines[0].parts.map(([t]) => t).join("");
+  const step = 0.035, start = 0.6;
+  const typedEnd = start + first.length * step;
+  const w = steps(first.length, start, step, T, (i) => f4(i * cw));
+  const clear = f4(0.97);
+  const loopTimes = [...w.times, clear];
+  const kfs = [];
+  const els = lines.map((l, i) => {
+    const y = top + i * lh;
+    if (i === 0) {
+      return `<clipPath id="type"><rect x="${x}" y="${y - 16}" height="24" width="${first.length * cw + 20}">${discrete("width", T, loopTimes, [...w.vals, 0], true)}</rect></clipPath>
+<text class="mono" x="${x}" y="${y}" font-size="14" clip-path="url(#type)">${spans(l.parts)}</text>
+<rect width="8" height="17" y="${y - 13}" fill="${C.cyan}" x="${x}">
+  ${discrete("x", T, loopTimes, [...w.vals.map((v) => f4(x + v)), x], true)}
+  ${discrete("opacity", T, [0, f4((typedEnd + 0.3) / T)], [1, 0], true)}
+</rect>`;
+    }
+    kfs.push(`@keyframes l${i} { 0%, ${pct(l.at)}% { opacity: 0; transform: translateX(-8px); } ${pct(l.at + 0.25)}% { opacity: 1; transform: none; } 96% { opacity: 1; } 100% { opacity: 0; } }`);
+    let el = `<g style="animation: l${i} ${T}s linear infinite"><text class="mono" x="${x}" y="${y}" font-size="14">${spans(l.parts)}</text>`;
+    if (l.caret) el += `<rect class="blink" x="${x + 2 * cw}" y="${y - 13}" width="8" height="17" fill="${C.cyan}"/>`;
+    el += "</g>";
+    if (l.right) {
+      kfs.push(`@keyframes r${i} { 0%, ${pct(l.at + 0.45)}% { opacity: 0; } ${pct(l.at + 0.6)}% { opacity: 1; } 96% { opacity: 1; } 100% { opacity: 0; } }`);
+      el += `\n<text class="mono" x="${W - 32}" y="${y}" font-size="13" fill="${C.green}" text-anchor="end" style="animation: r${i} ${T}s linear infinite">${esc(l.right)}</text>`;
+    }
+    return el;
   }).join("\n");
 
-  let prevMonth = null;
-  const months = weeks.map((w, i) => {
-    const m = new Date(w.contributionDays[0].date + "T00:00:00Z").toLocaleString("en-US", { month: "short", timeZone: "UTC" });
-    if (m === prevMonth) return "";
-    const show = prevMonth !== null && i < weeks.length - 2;
-    prevMonth = m;
-    return show ? `<text class="mono" x="${(cx0 + i * slot).toFixed(1)}" y="${base + 20}" font-size="10" fill="${t.muted}">${m}</text>` : "";
+  kfs.push(`@keyframes foot { 0%, ${pct(7.0)}% { opacity: 0; } ${pct(7.3)}% { opacity: 1; } 96% { opacity: 1; } 100% { opacity: 0; } }`);
+
+  const defs = `${edge(W, H, C.green, C.violet)}
+  <linearGradient id="bar" x1="0" x2="1"><stop offset="0" stop-color="${C.violet}" stop-opacity="0"/><stop offset=".5" stop-color="${C.violet}"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient>
+  <radialGradient id="tglow" cx="1" cy="0" r="1"><stop offset="0" stop-color="#7c3aed" stop-opacity=".22"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>`;
+
+  const body = `<rect width="${W}" height="${H}" fill="${C.panel}"/>
+<rect width="${W}" height="${H}" fill="url(#tglow)"/>
+<rect width="${W}" height="40" fill="#ffffff" fill-opacity=".025"/>
+<line x1="0" y1="40" x2="${W}" y2="40" stroke="${C.line}"/>
+<rect y="39" width="${W}" height="1.5" fill="url(#bar)"/>
+<circle cx="24" cy="20" r="6" fill="#ff5f57"/><circle cx="44" cy="20" r="6" fill="#febc2e"/><circle cx="64" cy="20" r="6" fill="#28c840"/>
+<text class="mono" x="${W / 2}" y="24" font-size="12" fill="${C.muted}" text-anchor="middle">agent@stealth — ~/humanity</text>
+${els}
+<text class="mono" x="${W - 32}" y="${H - 20}" font-size="11" fill="${C.dim}" text-anchor="end" style="animation: foot ${T}s linear infinite">tokens 12.4k · cost $0.03 · vibes ✓</text>`;
+
+  return svg(W, H, "An agent run: the agent plans, calls node-agent, wake, agentdog and receiptly as tools, and finishes all four tasks.", { defs, style: kfs.join("\n  ") }, body);
+}
+
+function card(p, i) {
+  const W = 440, H = 190;
+  const lines = wrap(p.blurb, 54).slice(0, 3);
+  const lang = p.primaryLanguage;
+
+  const defs = `${edge(W, H, p.color, C.ink)}
+  <radialGradient id="cglow"><stop offset="0" stop-color="${p.color}" stop-opacity=".32"/><stop offset="1" stop-color="${p.color}" stop-opacity="0"/></radialGradient>
+  <linearGradient id="num" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.color}" stop-opacity=".55"/><stop offset="1" stop-color="${p.color}" stop-opacity="0"/></linearGradient>`;
+
+  const style = `.orb { transform-box: fill-box; transform-origin: center; animation: orb 7s ease-in-out infinite; }
+  @keyframes orb { 50% { transform: translate(-24px, 14px) scale(1.15); } }`;
+
+  const body = `<rect width="${W}" height="${H}" fill="${C.panel}"/>
+<circle class="orb" cx="${W - 50}" cy="20" r="150" fill="url(#cglow)"/>
+<text class="sans" x="${W - 24}" y="72" font-size="74" font-weight="800" fill="url(#num)" text-anchor="end" letter-spacing="-.04em">${String(i + 1).padStart(2, "0")}</text>
+<circle cx="30" cy="34" r="4" fill="${p.color}" filter="url(#glow)"/>
+<text class="mono" x="44" y="38" font-size="11" fill="${C.muted}" letter-spacing=".08em">github.com/${LOGIN}</text>
+<text class="mono" x="24" y="76" font-size="21" font-weight="700" fill="${C.ink}">${esc(p.repo)}</text>
+${lines.map((l, j) => `<text class="sans" x="24" y="${106 + j * 20}" font-size="13.5" fill="${C.muted}">${esc(l)}</text>`).join("\n")}
+${lang ? `<circle cx="30" cy="${H - 24}" r="5" fill="${lang.color || C.muted}"/>
+<text class="mono" x="42" y="${H - 20}" font-size="12" fill="${C.muted}">${esc(lang.name)}</text>` : ""}
+${p.stargazerCount > 0 ? `<text class="mono" x="${W - 24}" y="${H - 20}" font-size="12" fill="${C.amber}" text-anchor="end">★ ${fmt(p.stargazerCount)}</text>` : ""}`;
+
+  return svg(W, H, `${p.repo}: ${p.blurb}`, { defs, style }, body);
+}
+
+function skyline(s) {
+  const W = 900, H = 530;
+  const weeks = s.weeks;
+  const counts = weeks.flatMap((w) => w.contributionDays.map((d) => d.contributionCount));
+  const max = Math.max(...counts, 1);
+  const Wv = [12.4, 3.6], Dv = [-7.6, 7.6], fill = 0.8, maxH = 175;
+  const ox = (W - (weeks.length * Wv[0] - 7 * Dv[0])) / 2 - 7 * Dv[0] + 10, oy = 222;
+  const P = (w, d, h = 0) => [ox + w * Wv[0] + d * Dv[0], oy + w * Wv[1] + d * Dv[1] - h];
+  const pts = (arr) => arr.map(([a, b]) => `${f4(a)},${f4(b)}`).join(" ");
+
+  const cells = [];
+  weeks.forEach((wk, w) => wk.contributionDays.forEach((day, i) => {
+    const d = new Date(day.date + "T00:00:00Z").getUTCDay();
+    cells.push({ w, d, day });
+  }));
+  cells.sort((a, b) => a.w + a.d - (b.w + b.d) || a.w - b.w);
+
+  const busiest = s.busiest;
+  let beacon = "";
+  const blocks = cells.map(({ w, d, day }) => {
+    const c = day.contributionCount;
+    const t = (c / max) ** 0.8;
+    const h = c === 0 ? 1.2 : 3 + Math.sqrt(c / max) * maxH;
+    const top = c === 0 ? "#191927" : t < 0.5 ? mix("#5b21b6", "#22d3ee", t * 2) : mix("#22d3ee", "#e0fbff", (t - 0.5) * 2);
+    const a = P(w, d), b = P(w + fill, d), cc = P(w + fill, d + fill), e = P(w, d + fill);
+    const up = (p) => [p[0], p[1] - h];
+    const faces = `<polygon points="${pts([e, cc, up(cc), up(e)])}" fill="${mix(top, "#000000", 0.35)}"/>
+<polygon points="${pts([b, cc, up(cc), up(b)])}" fill="${mix(top, "#000000", 0.55)}"/>
+<polygon points="${pts([up(a), up(b), up(cc), up(e)])}" fill="${top}"/>`;
+    if (day.date === busiest.date) {
+      const [bx, by] = up(P(w + fill / 2, d + fill / 2));
+      beacon = `<g class="beacon"><line x1="${f4(bx)}" y1="${f4(by)}" x2="${f4(bx)}" y2="${f4(by - 46)}" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3 3" stroke-opacity=".85"/>
+<circle cx="${f4(bx)}" cy="${f4(by - 46)}" r="3" fill="#ffffff" filter="url(#glow)"/>
+<text class="mono" x="${f4(bx)}" y="${f4(by - 56)}" font-size="11" fill="${C.ink}" text-anchor="middle">${fmt(c)} on ${shortDate(day.date)}</text></g>`;
+    }
+    return `<g class="b" style="animation-delay:${f4(0.3 + w * 0.028 + d * 0.012)}s">${faces}</g>`;
+  }).join("\n");
+
+  let prev = null;
+  const months = weeks.map((wk, w) => {
+    const m = new Date(wk.contributionDays[0].date + "T00:00:00Z").toLocaleString("en-US", { month: "short", timeZone: "UTC" });
+    if (m === prev) return "";
+    const show = prev !== null && w < weeks.length - 2;
+    prev = m;
+    const [mx, my] = P(w, 7.6);
+    return show ? `<text class="mono" x="${f4(mx)}" y="${f4(my + 10)}" font-size="10" fill="${C.dim}">${m}</text>` : "";
   }).join("");
 
-  const gridlines = [0.5, 1].map((f) => {
-    const y = base - f * maxH;
-    return `<line x1="${cx0}" y1="${y}" x2="${cx1}" y2="${y}" stroke="${t.faint}" stroke-dasharray="2 4"/>
-<text class="mono" x="${cx0 - 10}" y="${y + 3}" font-size="10" fill="${t.muted}" text-anchor="end">${fmt(Math.round(f * max))}</text>`;
-  }).join("\n");
+  const defs = `${edge(W, H, C.cyan, C.violet)}
+  <radialGradient id="floor" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#7c3aed" stop-opacity=".35"/><stop offset=".6" stop-color="#0891b2" stop-opacity=".12"/><stop offset="1" stop-color="#0891b2" stop-opacity="0"/></radialGradient>
+  <linearGradient id="big" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#c4b5fd"/><stop offset="1" stop-color="#67e8f9"/></linearGradient>`;
 
-  const busiestDate = new Date(stats.busiest.date + "T00:00:00Z").toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+  const style = `.b { transform-box: fill-box; transform-origin: 50% 100%; animation: grow .8s cubic-bezier(.2,.9,.25,1.15) both; }
+  @keyframes grow { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+  .beacon { animation: beacon 2.4s ease-in-out 2.4s infinite both; }
+  @keyframes beacon { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { opacity: .35; } }`;
+
   const kv = [
-    ["longest streak", `${stats.longest} days`],
-    ["current streak", `${stats.current} days`],
-    ["busiest day", `${fmt(stats.busiest.contributionCount)} · ${busiestDate}`],
-  ].map(([k, v], i) => `<text class="mono" x="32" y="${150 + i * 20}" font-size="11" fill="${t.muted}">${k}<tspan x="150" fill="${t.ink}">${esc(v)}</tspan></text>`).join("\n");
+    ["longest streak", `${s.longest} days`],
+    ["current streak", `${s.current} days`],
+    ["busiest day", `${fmt(busiest.contributionCount)} · ${shortDate(busiest.date)}`],
+  ].map(([k, v], i) => `<text class="mono" x="${W - 36}" y="${66 + i * 22}" font-size="11" fill="${C.muted}" text-anchor="end">${k}  <tspan fill="${C.ink}">${esc(v)}</tspan></text>`).join("\n");
 
-  const style = `
-  .col { transform-box: fill-box; transform-origin: bottom; animation: up .6s cubic-bezier(.2,.8,.2,1) both; }
-  @keyframes up { from { transform: scaleY(0); } to { transform: scaleY(1); } }`;
-
-  const body = `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12" fill="${t.bg}" stroke="${t.border}"/>
-<text class="mono" x="32" y="28" font-size="11" fill="${t.muted}" letter-spacing=".06em">METRIC <tspan fill="${t.ink}">contributions</tspan>  ·  weekly  ·  last 52w</text>
-<text class="mono" x="${W - 32}" y="28" font-size="11" fill="${t.muted}" text-anchor="end">updated ${stats.today}</text>
-<line x1="0" y1="44" x2="${W}" y2="44" stroke="${t.faint}"/>
-<text class="sans" x="32" y="104" font-size="40" font-weight="700" fill="${t.ink}" letter-spacing="-.02em">${fmt(stats.total)}</text>
-<text class="sans" x="32" y="126" font-size="13" fill="${t.muted}">contributions in the last year</text>
+  const body = `<rect width="${W}" height="${H}" fill="${C.bg}"/>
+<ellipse cx="${W / 2 + 40}" cy="${H - 130}" rx="480" ry="190" fill="url(#floor)"/>
+<text class="mono" x="36" y="44" font-size="11" fill="${C.muted}" letter-spacing=".12em">CONTRIBUTION SKYLINE · LAST 365 DAYS</text>
+<text class="sans" x="34" y="100" font-size="52" font-weight="800" fill="url(#big)" letter-spacing="-.03em">${fmt(s.total)}</text>
+<text class="sans" x="36" y="124" font-size="14" fill="${C.muted}">contributions, every one of them shipped</text>
 ${kv}
-${gridlines}
-<line x1="${cx0}" y1="${base}" x2="${cx1}" y2="${base}" stroke="${t.border}"/>
-${bars}
-${months}`;
+${blocks}
+${beacon}
+${months}
+<text class="mono" x="${W - 36}" y="${H - 22}" font-size="10" fill="${C.dim}" text-anchor="end">updated ${s.today}</text>`;
 
-  return svg(W, H, `${fmt(stats.total)} contributions in the last year`, style, body);
+  return svg(W, H, `Contribution skyline: ${fmt(s.total)} contributions in the last year`, { defs, style }, body);
 }
 
-function card(t, p) {
-  const W = 430, H = 168;
-  const color = t.spans[p.color];
-  const lines = wrap(p.blurb, 55).slice(0, 3);
-  const lang = p.primaryLanguage;
-  const stars = p.stargazerCount > 0 ? `★ ${fmt(p.stargazerCount)}` : "";
-
-  const body = `<rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="10" fill="${t.bg}" stroke="${t.border}"/>
-<rect x="24" y="22" width="22" height="6" rx="2" fill="${color}"/>
-<text class="mono" x="54" y="29" font-size="11" fill="${t.muted}">${esc(p.span)}</text>
-<text class="mono" x="${W - 24}" y="29" font-size="12" fill="${t.muted}" text-anchor="end">${stars}</text>
-<text class="mono" x="24" y="62" font-size="18" font-weight="700" fill="${t.ink}">${esc(p.repo)}</text>
-${lines.map((l, j) => `<text class="sans" x="24" y="${90 + j * 20}" font-size="13.5" fill="${t.muted}">${esc(l)}</text>`).join("\n")}
-${lang ? `<circle cx="${W - 24 - lang.name.length * 7.2 - 12}" cy="${H - 24}" r="5" fill="${lang.color || t.muted}"/>
-<text class="mono" x="${W - 24}" y="${H - 20}" font-size="12" fill="${t.muted}" text-anchor="end">${esc(lang.name)}</text>` : ""}`;
-
-  return svg(W, H, `${p.repo}: ${p.blurb}`, "", body);
+function footer() {
+  const W = 900, H = 120;
+  const wave = (amp, len, cy) => {
+    let d = `M -${len} ${cy}`;
+    for (let x = -len; x <= W + len; x += 6) d += ` L ${x} ${f4(cy + amp * Math.sin((2 * Math.PI * x) / len))}`;
+    return d;
+  };
+  const layers = [
+    [14, 180, 60, C.violet, 9], [10, 140, 64, C.cyan, 7], [7, 220, 58, C.pink, 12],
+  ].map(([amp, len, cy, color, dur], i) => `<path d="${wave(amp, len, cy)}" fill="none" stroke="${color}" stroke-opacity="${0.55 - i * 0.12}" stroke-width="1.5" style="animation: w${i} ${dur}s linear infinite"/>`).join("\n");
+  const style = [180, 140, 220].map((len, i) => `@keyframes w${i} { to { transform: translateX(${i % 2 ? len : -len}px); } }`).join("\n  ");
+  const defs = `${edge(W, H, C.pink, C.cyan)}
+  <linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-color="${C.bg}"/><stop offset=".12" stop-color="${C.bg}" stop-opacity="0"/><stop offset=".88" stop-color="${C.bg}" stop-opacity="0"/><stop offset="1" stop-color="${C.bg}"/></linearGradient>`;
+  const body = `<rect width="${W}" height="${H}" fill="${C.bg}"/>
+${layers}
+<rect width="${W}" height="${H}" fill="url(#fade)"/>
+<rect x="${W / 2 - 250}" y="${H / 2 - 18}" width="500" height="36" rx="18" fill="${C.bg}" stroke="${C.line}"/>
+<text class="mono" x="${W / 2}" y="${H / 2 + 5}" font-size="13" fill="${C.ink}" text-anchor="middle">thanks for stopping by <tspan fill="${C.violet}">✦</tspan> let's build agents that help people</text>`;
+  return svg(W, H, "Thanks for stopping by. Let's build agents that help people.", { defs, style }, body);
 }
 
 const { user, repos } = await fetchData();
@@ -264,14 +448,17 @@ const days = cal.weeks.flatMap((w) => w.contributionDays);
 const stats = {
   total: cal.totalContributions,
   weeks: cal.weeks,
+  stars: user.repositories.nodes.reduce((sum, r) => sum + r.stargazerCount, 0),
   today: new Date().toISOString().slice(0, 10),
   ...streaks(days),
 };
 
+rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
-for (const [name, t] of Object.entries(THEMES)) {
-  writeFileSync(new URL(`header-${name}.svg`, OUT), header(t, stats));
-  writeFileSync(new URL(`activity-${name}.svg`, OUT), activity(t, stats));
-  repos.forEach((p) => writeFileSync(new URL(`card-${p.repo}-${name}.svg`, OUT), card(t, p)));
-}
-console.log(`Wrote assets for ${fmt(stats.total)} contributions, ${repos.length} project cards.`);
+const write = (name, content) => writeFileSync(new URL(name, OUT), content);
+write("hero.svg", hero(stats));
+write("terminal.svg", terminal());
+write("skyline.svg", skyline(stats));
+write("footer.svg", footer());
+repos.forEach((p, i) => write(`card-${p.repo}.svg`, card(p, i)));
+console.log(`Wrote assets for ${fmt(stats.total)} contributions, ${stats.stars} stars, ${repos.length} project cards.`);
