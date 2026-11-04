@@ -28,7 +28,7 @@
 <text class="sans" x="24" y="104" font-size="13.5" fill="#9a9ab8">screen over USB, taps over Bluetooth.</text>
 <circle cx="29" cy="142" r="4.5" fill="#F05138"/>
 <text class="mono" x="40" y="146" font-size="12" fill="#9a9ab8">Swift</text>
-<text class="mono" x="416" y="146" font-size="12" fill="#fbbf24" text-anchor="end">★ 10</text>
+<text class="mono" x="416" y="146" font-size="12" fill="#fbbf24" text-anchor="end">★ 12</text>
 </g>
 <rect x=".5" y=".5" width="439" height="167" rx="16" fill="none" stroke="#23233a" stroke-width="1"/>
 </svg>
